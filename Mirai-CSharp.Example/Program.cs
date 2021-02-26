@@ -52,8 +52,11 @@ namespace Mirai_CSharp.Example
                 };
 
 
-                await discord.ConnectAsync();
+                 discord.ConnectAsync();
+                await discord.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("Pornhub"/*DSharpPlus.Entities.ActivityType.Watching*/));
                 await Task.Delay(-1);
+                
+                
             });
             
 
