@@ -491,6 +491,11 @@ namespace KiraDX.Bot
                 */
                 if (BotFunc.FuncSwith(g,"bot"))
                 {
+                    if (Functions.GetRandomNumber(0,1000)==8)
+                    {
+                        KiraPlugin.SendGroupMessage(g.s,g.fromGroup,"qwq");
+                    }
+
                     if (msg.Contains($"[mirai:at:{botid}]") && BotFunc.FuncSwith(g, "自动回复"))
                     {
                         KiraDX.Bot.Others.Study.Reply(g, e);
