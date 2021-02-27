@@ -181,6 +181,9 @@ namespace Mirai_CSharp
                 //  ^-- 处理 JsonException 到 NotSupportedException, https://github.com/mamoe/mirai-api-http/issues/85
                 // internalStream 是 MemoryStream, 内部为全托管字段不需要 Dispose
             }
+            catch (Exception) {
+                return null;
+            }
             finally
             {
                 if (disposeStream)

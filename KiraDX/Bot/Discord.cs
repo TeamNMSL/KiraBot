@@ -18,6 +18,7 @@ namespace KiraDX.Bot
         public long fromAccount;
         public long fromGroup;
         public long BotId = 1145141919810;
+        public string Type = "Discord";
 
         public DisMsg(DiscordClient s, MessageCreateEventArgs e, string msg, long fromAccount, long fromGroup)
         {

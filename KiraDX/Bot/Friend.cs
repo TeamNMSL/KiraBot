@@ -13,7 +13,7 @@ namespace KiraDX.Bot
         public long botid;
         public Mirai_CSharp.MiraiHttpSession s;
         public IFriendMessageEventArgs e;
-
+        public string Type = "QQ_Friend";
         public FriendVars(string msg, long fromAccount, long botid, MiraiHttpSession session, IFriendMessageEventArgs e)
         {
             this.msg = msg;
@@ -65,13 +65,7 @@ namespace KiraDX.Bot
                 "，，，",
                 "，，",
                 "谔谔",
-                "arcaea查分",
-                "arc查分",
-                "arcaea查分bot",
-                "arc查分bot",
-                "arcbot",
-                "arcaeabot",
-                "/k help",
+                "arc",
                 ",,",
                 ",,,",
                 "...",
