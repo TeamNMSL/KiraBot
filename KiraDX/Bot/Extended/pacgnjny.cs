@@ -23,7 +23,7 @@ namespace KiraDX.Bot.Extended
                 string r = task.Result;
                 if (r== "获取失败,要不再试下?\r\n")
                 {
-                    r = "哈↑哈↓ 鱼板写的东西又出bug了。我不知道是不是你指令的问题，反正关于爬模块的东西我啥都不知道，毕竟不是我写的（悲";
+                    r = "哈↑哈↓ 这东西又出bug了。我不知道是不是你指令的问题，反正关于爬模块的东西我啥都不知道，毕竟不是我写的（悲";
                 }
                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup,r);
                 
