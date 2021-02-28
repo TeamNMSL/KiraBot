@@ -16,21 +16,30 @@ namespace KiraDX
 {
     public static partial class KiraPlugin
     {
-        public static async System.Threading.Tasks.Task<bool> sendMessage(KiraDX.Bot.GroupMsg g, string msg, bool IsChain = false,long fromGroup=0,bool IsToFriend=false)
+        public static async System.Threading.Tasks.Task<bool> sendMessage(KiraDX.Bot.GroupMsg g, string msg, bool IsChain = false,long ToGroup=0,bool IsToFriend=false,long ToFriend=0)
         {
             try
             {
                 MiraiHttpSession session = g.s;
                 long GroupID;
-                if (fromGroup == 0)
+                if (ToGroup == 0)
                 {
                     GroupID = g.fromGroup;
                 }
                 else {
 
-                    GroupID = fromGroup;
+                    GroupID = ToGroup;
                 }
-                
+                long FriendID;
+                if (ToFriend==0)
+                {
+                    FriendID = g.fromAccount;
+                }
+                else
+                {
+                    FriendID = ToFriend;
+                }
+                MessageBuilder final = new MessageBuilder();
                 if (IsChain)
                 {
                     char[] chars = msg.ToCharArray();
@@ -157,16 +166,29 @@ namespace KiraDX
                         Text = Code;
                     }
                     messageBuilder.AddPlainMessage(Text);
-                    await session.SendGroupMessageAsync(GroupID, messageBuilder);
+                    final = messageBuilder;
                     
+                    //await session.SendGroupMessageAsync(GroupID, messageBuilder);
+
                 }
                 else
                 {
 
-                    
+                    MessageBuilder builder = new MessageBuilder();
+                    builder.AddPlainMessage(msg);
+                    final = builder;
+                    //await session.SendGroupMessageAsync(GroupID, builder);
                 }
 
-
+                if (IsToFriend)
+                {
+                    session.SendFriendMessageAsync(FriendID, final);
+                }
+                else
+                {
+                    session.SendGroupMessageAsync(GroupID, final);
+                }
+                
                 return true;
             }
             catch (Exception)
@@ -228,8 +250,6 @@ namespace KiraDX.Bot
                     return;
                 }
                 #endregion
-
-               
 
                 if ((msg.format()=="/help"||msg.format() == "/k help")&&BotFunc.IsMainBot(g))
                 {
