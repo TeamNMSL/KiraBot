@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		target.txt = target.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mirai-CSharp", "Mirai-CSharp\Mirai-CSharp.csproj", "{82C72F51-1692-42CF-89AF-EE595D08052F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{B2A02603-2B43-4942-8C53-3DD3E76939A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2A02603-2B43-4942-8C53-3DD3E76939A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2A02603-2B43-4942-8C53-3DD3E76939A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82C72F51-1692-42CF-89AF-EE595D08052F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82C72F51-1692-42CF-89AF-EE595D08052F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82C72F51-1692-42CF-89AF-EE595D08052F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82C72F51-1692-42CF-89AF-EE595D08052F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

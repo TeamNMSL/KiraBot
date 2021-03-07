@@ -13,11 +13,11 @@
 
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="4.0.0-rc2" />
+    <PackageReference Include="Mirai-CSharp" Version="1.0.2.2-preview.4" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\KiraDX\KiraDX.csproj" />
-    <ProjectReference Include="..\Mirai-CSharp\Mirai-CSharp.csproj" />
   </ItemGroup>
   
 </Project>

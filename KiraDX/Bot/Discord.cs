@@ -4,7 +4,7 @@ using DSharpPlus.EventArgs;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using KiraDX.Frame;
 namespace KiraDX.Bot
 {
 
@@ -43,6 +43,7 @@ namespace KiraDX.Bot
             if (msg=="/k help")
             {
                 KiraPlugin.SendMsg("[KiraDiscord]\nBind your Arcaea account:\n/arc bind <FriendCode>\nCheck your recent score:\n /arc\nCheck your best score in the song:\n /arc info <songid> [Difficulty]\n Check your best 30:\n /arc b30", g);
+                OnCommanded.onCommanded(g, "help");
                 return;
             }
 
@@ -50,12 +51,15 @@ namespace KiraDX.Bot
             {
                 case "色圖來":
                     KiraDX.Bot.Picture.Hso.Hso.GetHso(g,"colorpic");
+                    OnCommanded.onCommanded(g, "hso");
                     return;
                 case "色图来":
                     KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "colorpic");
+                    OnCommanded.onCommanded(g, "hso");
                     return;
                 case "/hso":
                     KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "colorpic");
+                    OnCommanded.onCommanded(g, "hso");
                     return;
                 default:
                     break;
@@ -69,7 +73,8 @@ namespace KiraDX.Bot
 
                    
                         KiraDX.Bot.arcaea.arcaea.SongBest(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                     
                     
                 }
@@ -81,7 +86,8 @@ namespace KiraDX.Bot
                 {
 
                         KiraDX.Bot.arcaea.arcaea.Arc(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                    
                 }
             }
@@ -95,7 +101,8 @@ namespace KiraDX.Bot
                    
                     
                         KiraDX.Bot.arcaea.arcaea.b30(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                   
                 }
             }
@@ -107,7 +114,8 @@ namespace KiraDX.Bot
                 {
 
                       KiraDX.Bot.arcaea.arcaea.Bind(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                   
                 }
             }
@@ -119,7 +127,8 @@ namespace KiraDX.Bot
 
                   
                         KiraDX.Bot.arcaea.arcaea.RandArc(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                    
                 }
             }

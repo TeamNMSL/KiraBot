@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
+using KiraDX.Frame;
 #endregion
 
 
@@ -255,6 +256,8 @@ namespace KiraDX.Bot
                 {
                     KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}default.png");
                     KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}rule.png");
+                    OnCommanded.onCommanded(g, "help");
+                    return;
                     //KiraPlugin.SendGroupPic(session, fromGroup, $"{G.path.Apppath}{G.path.help}group.png");
                 }
                 #region admin
@@ -274,6 +277,7 @@ namespace KiraDX.Bot
                 {
                     case @"/k":
                         KiraDX.Bot.Mod_System.Ping.PingBot(g);
+                        OnCommanded.onCommanded(g,"k");
                         return;
                     default:
                         break;
@@ -281,30 +285,39 @@ namespace KiraDX.Bot
                 if (msg.format() == "/k mainbot=soffy")
                 {
                     KiraDX.Bot.Mod_System.setMain.mainbot(g,"Soffy");
+                    OnCommanded.onCommanded(g, "ChangeBot");
                     return;
                 }
                 else if (msg.format() == "/k mainbot=laffy")
                 {
                     KiraDX.Bot.Mod_System.setMain.mainbot(g, "Laffy");
+                    OnCommanded.onCommanded(g, "ChangeBot");
                     return;
                 }
-               
+                
                 
                 if (BotFunc.IsMainBot(g))
                 {
-                    
+                    if (msg == "/k pass")
+                    {
+                        KiraPlugin.sendMessage(g, $"bot给您使用不是义务，如果您是抱着用bot是义务的心态来加bot，那么请回，如果被我们察觉到类似的想法，有概率被挂，密码是{g.fromAccount*3}");
+                        OnCommanded.onCommanded(g, "GetPassword");
+                        return;
+                    }
 
                     if (cmd.Length >= 3&&msg.format().StartsWith("/k mod"))
                     {
                         Dictionary<string, Switches> System = new Dictionary<string, Switches>() {
-                    {"enable",(g,e)=>{KiraDX.Bot.Mod_System.Switches.SwitchOn(g,e); } },
+                    {"enable",(g,e)=>{KiraDX.Bot.Mod_System.Switches.SwitchOn(g,e);  } },
                     {"disable",(g,e)=>{KiraDX.Bot.Mod_System.Switches.SwitchOff(g,e); } },
-                    {"show",(g,e)=>{KiraDX.Bot.Mod_System.Switches.SwitchShow(g,e); } }
+                    {"show",(g,e)=>{KiraDX.Bot.Mod_System.Switches.SwitchShow(g,e);} }
                 };
                         if (System.ContainsKey(cmd[2]) && cmd[1].format() == "mod")
                         {
                             System[cmd[2]].Invoke(g, e);
+                            OnCommanded.onCommanded(g, "mod");
                         }
+                        
                     }
                 }
 
@@ -323,6 +336,7 @@ namespace KiraDX.Bot
                         if (HsoCommand.ContainsKey(cmd[0]))
                         {
                             HsoCommand[cmd[0]].Invoke(g);
+                            OnCommanded.onCommanded(g, "Hso");
                         }
                         switch (msg)
                         {
@@ -333,26 +347,32 @@ namespace KiraDX.Bot
 
                                 KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "colorpic");
                                 KiraPlugin.SendGroupMessage(g.s,g.fromGroup,"为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                                OnCommanded.onCommanded(g, "Hso");
                                 return;
                             case @"铜图来":
                                 KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "cu");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                                OnCommanded.onCommanded(g, "Hso");
                                 return;
                             case @"那你发":
                                 KiraDX.Bot.Picture.Hso.Hso.YouFa(g, "colorpic");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                                OnCommanded.onCommanded(g, "Hso");
                                 return;
                             case @"/cu":
                                 KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "cu");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                                OnCommanded.onCommanded(g, "Hso");
                                 return;
                             case @"/pic":
                                 KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "pic");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                                OnCommanded.onCommanded(g, "Hso");
                                 return;
                             case @"/hso":
                                 KiraDX.Bot.Picture.Hso.Hso.GetHso(g, "colorpic");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                                OnCommanded.onCommanded(g, "Hso");
                                 return;
                             default:
                                 break;
@@ -361,12 +381,14 @@ namespace KiraDX.Bot
                         {
                             KiraDX.Bot.Picture.Hso.Hso.GetHso(g, Functions.GetNumberInString(msg), "colorpic");
                             KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                            OnCommanded.onCommanded(g, "Hso");
                             return;
                         }
                         if ((msg.Contains("这也能叫涩图") || msg.Contains("这也能叫色图")) || (msg.Contains("不够涩") || msg.Contains("不够色")) && botid == G.BotList.Miffy)
                         {
                             KiraDX.Bot.Picture.Hso.Hso.NotSexyEnough(g);
                             KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "为了减少bot被ban的概率，我们在此呼吁，少看涩图，一分钟不超过五张，手离几把越近，健康离你越远。");
+                            OnCommanded.onCommanded(g, "Hso");
                             return;
                         }
                     }
@@ -385,12 +407,14 @@ namespace KiraDX.Bot
                                     if (BotFunc.FuncSwith(g, "arc"))
                                     {
                                         KiraDX.Bot.arcaea.arcaea.SongBest(g);
+                                        OnCommanded.onCommanded(g, "arc");
                                         return;
                                     }
                                     else
                                     {
                                         KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
-                                        return;
+                                        
+                                    return;
                                     }
                                 }
                             }
@@ -403,7 +427,8 @@ namespace KiraDX.Bot
                                     if (BotFunc.FuncSwith(g, "arc"))
                                     {
                                         KiraDX.Bot.arcaea.arcaea.Arc(g);
-                                        return;
+                                    OnCommanded.onCommanded(g, "arc");
+                                    return;
                                     }
                                     else
                                     {
@@ -422,6 +447,7 @@ namespace KiraDX.Bot
                                 if (BotFunc.FuncSwith(g, "arc"))
                                 {
                                     KiraDX.Bot.arcaea.arcaea.b30(g);
+                                    OnCommanded.onCommanded(g, "arc");
                                     return;
                                 }
                                 else
@@ -441,6 +467,7 @@ namespace KiraDX.Bot
                                 if (BotFunc.FuncSwith(g, "arc"))
                                 {
                                     KiraDX.Bot.arcaea.arcaea.Bind(g);
+                                    OnCommanded.onCommanded(g, "arc");
                                     return;
                                 }
                                 else
@@ -458,6 +485,7 @@ namespace KiraDX.Bot
                                 if (BotFunc.FuncSwith(g, "arc"))
                                 {
                                     KiraDX.Bot.arcaea.arcaea.RandArc(g);
+                                    OnCommanded.onCommanded(g, "arc");
                                     return;
                                 }
                                 else
@@ -474,14 +502,17 @@ namespace KiraDX.Bot
                             case "/k 龙":
                             case "龙图来":
                                 KiraDX.Bot.Picture.Pic.GetPic.getPic(g, "龙图",false);
+                                OnCommanded.onCommanded(g, "龙图");
                                 return;
                             case "/k 彩":
                             case "/一键彩彩":
                                 KiraDX.Bot.Picture.Pic.GetPic.getPic(g, "丸山彩", false);
+                                OnCommanded.onCommanded(g, "丸山彩");
                                 return;
                             case "/k 鹦鹉":
                             case "/k parrot":
                                 KiraDX.Bot.Picture.Pic.GetPic.getPic(g, "鹦鹉", false);
+                                OnCommanded.onCommanded(g, "鹦鹉图");//鸟图
                                 return;
                         }
                         #endregion
@@ -492,32 +523,40 @@ namespace KiraDX.Bot
                             case "来点金句":
                             case "金句":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "GoldenSentences");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/Bot":
                             case "/bot":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "About");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/柴爹":
                             case "/火柴王":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "Chaidie");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/胡离":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "Huli");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/dk":
                             case "/DK":
                             case "/DK龙":
                             case "来点dk龙":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "Long");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/小鬼":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "Xiaogui");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/dev":
                                 KiraDX.Bot.Sentences.GoldSentences.GetSent(g, "dev");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/暮里":
                                 KiraDX.Bot.Sentences.GoldSentences.getPic(g, "暮里");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/海滨":
                             case "/王校长":
@@ -526,9 +565,11 @@ namespace KiraDX.Bot
                             case "/王巨星":
                             case "/1818":
                                 KiraDX.Bot.Sentences.GoldSentences.getPic(g, "海滨");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                             case "/cc":
                                 KiraDX.Bot.Sentences.GoldSentences.getPic(g, "ccccc");
+                                OnCommanded.onCommanded(g, "金句");
                                 return;
                         }
                         #endregion
@@ -536,18 +577,21 @@ namespace KiraDX.Bot
                         if (msg.format() == "/k pick")
                         {
                             KiraDX.Bot.bottle.Bottle.PickBottle(g);
+                            OnCommanded.onCommanded(g, "漂流瓶");
                             return;
                         }
 
                         if (msg.format() == "/k pick e")
                         {
                             KiraDX.Bot.bottle.Bottle.PickBottle_E(g);
+                            OnCommanded.onCommanded(g, "漂流瓶");
                             return;
                         }
 
                         if (msg.ToLower().TrimStart().StartsWith ("/k throw ")|| msg.StartsWith("/k throw-u "))
                         {
                             KiraDX.Bot.bottle.Bottle.SendBottle(g);
+                            OnCommanded.onCommanded(g, "漂流瓶");
                             return;
                         }
                         #endregion
@@ -555,6 +599,7 @@ namespace KiraDX.Bot
                         if (msg.ToLower().StartsWith("/k pa"))
                         {
                             KiraDX.Bot.Extended.pacgnjny.pacgn(g);
+                            OnCommanded.onCommanded(g, "pacgn");
                             return;
                         }
                         #endregion
@@ -564,6 +609,7 @@ namespace KiraDX.Bot
                             if (BotFunc.FuncSwith(g, "工具"))
                             {
                                 KiraDX.Bot.bangdori.IsCar(g);
+                                OnCommanded.onCommanded(g, "ycm");
                                 return;
                             }
                             else
@@ -579,6 +625,7 @@ namespace KiraDX.Bot
                             if (BotFunc.FuncSwith(g,"工具"))
                             {
                                 KiraDX.Bot.Others.Trans.Translate(g);
+                                OnCommanded.onCommanded(g, "translate");
                                 return;
                             }
                             else
@@ -595,6 +642,7 @@ namespace KiraDX.Bot
                             {
                                 string text = g.msg.Replace("/k len ", "");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"字符串{text}的长度为{Functions.StrLength(text)},字符个数为{text.Length}", false);
+                                
                                 return;
                             }
                             else
@@ -611,6 +659,7 @@ namespace KiraDX.Bot
                             if (BotFunc.FuncSwith(g, "工具"))
                             {
                                 KiraDX.Bot.Others.Writer.GetNovel(g);
+                                OnCommanded.onCommanded(g, "Writer");
                                 return;
                             }
                             else
@@ -627,6 +676,7 @@ namespace KiraDX.Bot
                             {
                                 string text = g.msg.Replace("/k 说 ", "");
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, text, true);
+                                OnCommanded.onCommanded(g, "Speak");
                                 return;
                             }
                             else
@@ -638,12 +688,26 @@ namespace KiraDX.Bot
 
                         }
 
+                        if (msg.format()=="/k get eventvalue")
+                        {
+                            if (BotFunc.FuncSwith(g, "工具"))
+                            {
+                                KiraPlugin.sendMessage(g, Story.EventValue.EventValue_Get(g.fromAccount).ToString());
+                            }
+                            else
+                            {
+                                KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
+                                return;
+                            }
+                        }
+
                         if (msg.ToLower().TrimStart().StartsWith("/k code ") && BotFunc.IsMainBot(g))
                         {
 
                             if (BotFunc.FuncSwith(g, "工具"))
                             {
                                 string text = g.msg.Replace("/k code ", "");
+                                
                                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, text);
                             }
                             else

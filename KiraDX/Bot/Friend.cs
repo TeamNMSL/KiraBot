@@ -4,6 +4,7 @@ using Mirai_CSharp.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using KiraDX.Frame;
 
 
 namespace KiraDX
@@ -257,7 +258,19 @@ namespace KiraDX.Bot
             message = message.Substring(message.IndexOf("回答:"), message.Length - message.IndexOf("回答:"));
             message = message.Replace("回答:","");
             message=message.TrimStart().TrimEnd();
-            bool IsAgree = true;
+            bool IsAgree;
+            if (message.Contains((f.e.FromQQ* 3).ToString()))
+            {
+                IsAgree = true;
+            }
+            else
+            {
+                IsAgree = false;
+            }
+
+            
+
+            /*
             if (Functions.StrLength(message)<2)
             {
                 IsAgree = false;
@@ -273,7 +286,7 @@ namespace KiraDX.Bot
                 "...",
                 "..",
                 "。。",
-                "。。。",
+                "。。。","额",
                 "纯自动","过不过",
             "/"};
             Console.WriteLine(message);
@@ -308,7 +321,7 @@ namespace KiraDX.Bot
                 {
                     IsAgree = false;
                 }
-            }
+            }*/
             if (f.session.QQNumber!=G.BotList.Miffy&&IsAgree)
             {
                 await f.session.HandleNewFriendApplyAsync(f.e, FriendApplyAction.Allow);
@@ -346,6 +359,7 @@ namespace KiraDX.Bot
                     KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "下面是帮助文本，如果没有群能用的也欢迎加入bot的群1044241327");
                     KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}default.png");
                     KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}rule.png");
+                    OnCommanded.onCommanded(g, "help");
                     return;
                 default:
                     break;
@@ -358,7 +372,8 @@ namespace KiraDX.Bot
 
 
                         KiraDX.Bot.arcaea.arcaea.SongBest(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
 
                 }
             }
@@ -370,7 +385,8 @@ namespace KiraDX.Bot
 
 
                         KiraDX.Bot.arcaea.arcaea.Arc(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
 
                 }
             }
@@ -381,7 +397,8 @@ namespace KiraDX.Bot
                 if (msg == item)
                 {
                         KiraDX.Bot.arcaea.arcaea.b30(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                 }
             }
 
@@ -392,7 +409,9 @@ namespace KiraDX.Bot
                 {
 
                         KiraDX.Bot.arcaea.arcaea.Bind(g);
-                        return;
+
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                    
                 }
             }
@@ -402,7 +421,8 @@ namespace KiraDX.Bot
                 if (msg.StartsWith(item))
                 {
                         KiraDX.Bot.arcaea.arcaea.RandArc(g);
-                        return;
+                    OnCommanded.onCommanded(g, "arc");
+                    return;
                  
                 }
             }
