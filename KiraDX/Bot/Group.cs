@@ -602,6 +602,11 @@ namespace KiraDX.Bot
                             OnCommanded.onCommanded(g, "pacgn");
                             return;
                         }
+
+                        if (msg.format().StartsWith("/k story "))
+                        {
+                            KiraDX.Bot.Story.Story.StoryGet(g);
+                        }
                         #endregion
                         #region 工具
                         if (msg.format().StartsWith("ycm") || msg.format() == "有车吗")

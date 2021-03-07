@@ -69,6 +69,10 @@ namespace KiraDX.Bot.arcaea
         public static JObject GetRecent(string usercode) {
             try
             {
+                if (usercode=="000000000"|| usercode == "000000001"||usercode == "000000002")
+                {
+                    return null;
+                }
                 var recent = new HttpClient();
                 recent.DefaultRequestHeaders.Add("User-Agent", G.APIs.ARCAPI.UserAgent);
                 var R = Encoding.UTF8.GetString(recent.GetByteArrayAsync($"{G.APIs.ARCAPI.site}{G.APIs.ARCAPI.Recently}{usercode}").Result);

@@ -27,7 +27,7 @@ namespace KiraDX.Bot.arcaea
                 {
                     fcd = "0" + fcd;
                 }
-            
+
             JObject Info = GetRecent(fcd);
             if (Info["status"].ToString() != "0")
             {

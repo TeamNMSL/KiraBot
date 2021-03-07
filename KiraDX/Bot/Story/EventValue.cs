@@ -31,6 +31,36 @@ namespace KiraDX.Bot.Story
             }
             
         }
+        public static void StoryLock(long user,string story) {
+            DataTable dt = DB.execute($"{G.path.Apppath}StoryLock.db", $"SELECT * from record where ( User='{user}' and StoryName='{story}' )");
+            int rc = dt.Rows.Count;
+            if (rc<1)
+            {
+                DB.execute($"{G.path.Apppath}StoryLock.db", $"INSERT into record VALUES('{user}','{story}')");
+            }
+        }
+
+        public static bool IsLock(long user, string story)
+        {
+            DataTable dt = DB.execute($"{G.path.Apppath}StoryLock.db", $"SELECT * from record where ( User='{user}' and StoryName='{story}' )");
+            int rc = dt.Rows.Count;
+            if (rc < 1)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public static void EventValue_Test(CmdedVars e)
+        {
+            int v = EventValue_Get(e.fromUser);
+            //throw new NotImplementedException();
+            if (v>10)
+            {
+                StoryLock(e.fromUser,"前言");
+            }
+        }
     }
 
 }

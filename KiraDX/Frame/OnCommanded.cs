@@ -37,6 +37,7 @@ namespace KiraDX.Frame
             try
             {
                 KiraDX.Bot.Story.EventValue.EventValue_Add(e);
+                KiraDX.Bot.Story.EventValue.EventValue_Test(e);
             }
             catch (Exception)
             {
