@@ -258,7 +258,7 @@ namespace KiraDX.Bot
                     KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}rule.png");
                     OnCommanded.onCommanded(g, "help");
                     return;
-                    //KiraPlugin.SendGroupPic(session, fromGroup, $"{G.path.Apppath}{G.path.help}group.png");
+                    
                 }
                 #region admin
                 if (BotFunc.isAdmin(g))
