@@ -18,6 +18,7 @@ namespace KiraDX.Bot.Mod_System
             else
             {
                 inf = "自助ban";
+
             }
             ctt += $"{g.fromAccount} {inf}\n";
             File.WriteAllText($"{G.path.Apppath}ban.kira", ctt);
