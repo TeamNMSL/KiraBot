@@ -57,10 +57,10 @@ using System.Text;
                 }
                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, rpl);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                KiraPlugin.sendMessage(g, e.Message);
 
-                
             }
         }
         public static void RandArc(DisMsg g)
@@ -115,10 +115,10 @@ using System.Text;
                 }
                 KiraPlugin.SendMsg(rpl, g);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                
+                KiraPlugin.SendMsg(e.Message,g);
             }
         }
         public static void RandArc(FriendVars g)
@@ -172,9 +172,9 @@ using System.Text;
                 }
                 KiraPlugin.SendFriendMessage(g.s, g.fromAccount, rpl);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                KiraPlugin.sendMessage(g, e.Message);
                 
             }
             
