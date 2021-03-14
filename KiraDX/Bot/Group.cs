@@ -258,6 +258,7 @@ namespace KiraDX.Bot
                 {
                     KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}default.png");
                     KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}rule.png");
+                    KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}attention.png");
                     OnCommanded.onCommanded(g, "help");
                     return;
                     

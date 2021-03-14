@@ -330,6 +330,7 @@ namespace KiraDX.Bot
                 KiraPlugin.SendFriendMessage(f.session, f.e.FromQQ, "下面是帮助文本，如果没有群能用的也欢迎加入bot的群1044241327");
                 KiraPlugin.SendFriendPic(f.session, f.e.FromQQ, $"{G.path.Apppath}{G.path.help}default.png");
                 KiraPlugin.SendFriendPic(f.session, f.e.FromQQ, $"{G.path.Apppath}{G.path.help}rule.png");
+                KiraPlugin.SendFriendPic(f.session, f.e.FromQQ, $"{G.path.Apppath}{G.path.help}attention.png");
             }
             else
             {
@@ -359,6 +360,8 @@ namespace KiraDX.Bot
                     KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "下面是帮助文本，如果没有群能用的也欢迎加入bot的群1044241327");
                     KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}default.png");
                     KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}rule.png");
+
+                    KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}attention.png");
                     OnCommanded.onCommanded(g, "help");
                     return;
                 default:
