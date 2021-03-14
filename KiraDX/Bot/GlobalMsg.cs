@@ -132,7 +132,7 @@ namespace KiraDX.Bot
                 {
                     if (BotFunc.IsMainBot(gm))
                     {
-                        KiraPlugin.sendMessage(gm, $"[{info[2]}] \n{info[3]}\n提示:你可以通过/k channel off/on {info[2]}来打开或禁用这个频道\n随机数[{Functions.GetRandomNumber(1,114514)}]", true);
+                        KiraPlugin.sendMessage(gm, $"[{info[2]}] \n{info[3]}\n提示:你可以通过/k channel off/on {info[2]}来打开或禁用这个频道( {info[2]} 也要带上，这是频道名)\n随机数[{Functions.GetRandomNumber(1,114514)}]", true);
                     }
                     
                 }

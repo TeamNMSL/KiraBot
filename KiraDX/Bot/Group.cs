@@ -415,27 +415,8 @@ namespace KiraDX.Bot
                     if (BotFunc.IsMainBot(g)) 
                     {
                         #region arcaea
-                        string[] dic = new []{ "查分", "/as", "/a score", "/arc score", "/a info", "/arc info" };
-                            foreach (var item in dic)
-                            {
-                                if (msg.format().StartsWith(item))
-                                {
 
-                                    if (BotFunc.FuncSwith(g, "arc"))
-                                    {
-                                        KiraDX.Bot.arcaea.arcaea.SongBest(g);
-                                        OnCommanded.onCommanded(g, "arc");
-                                        return;
-                                    }
-                                    else
-                                    {
-                                        KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
-                                        
-                                    return;
-                                    }
-                                }
-                            }
-                            dic = new []{ "查分", "/r", "/a", "/arc", "/最近", "/arς", "/αrc", @"/@rc", "/ARForest", "/ārc" };
+                        string[]  dic = new []{ "查分", "/r", "/a", "/arc", "/最近", "/arς", "/αrc", @"/@rc", "/ARForest", "/ārc","查" };
                             foreach (var item in dic)
                             {
                                 if (msg.format() == item)
@@ -470,6 +451,26 @@ namespace KiraDX.Bot
                                 else
                                 {
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
+                                    return;
+                                }
+                            }
+                        }
+                        dic = new[] { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info", "查" };
+                        foreach (var item in dic)
+                        {
+                            if (msg.format().StartsWith(item))
+                            {
+
+                                if (BotFunc.FuncSwith(g, "arc"))
+                                {
+                                    KiraDX.Bot.arcaea.arcaea.SongBest(g);
+                                    OnCommanded.onCommanded(g, "arc");
+                                    return;
+                                }
+                                else
+                                {
+                                    KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
+
                                     return;
                                 }
                             }
