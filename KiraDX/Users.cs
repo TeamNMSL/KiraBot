@@ -150,10 +150,12 @@ namespace KiraDX
         public static class cfgs {
             public static string FunctionList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira");
             public static string NonStudy= File.ReadAllText($"{G.path.Apppath}NonStudy.Kira");
+            public static string Channel = File.ReadAllText($"{G.path.Apppath}ChannelList.Kira");
             public static void reload() {
                 
                 FunctionList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira");
                 NonStudy = File.ReadAllText($"{G.path.Apppath}NonStudy.Kira");
+                Channel = File.ReadAllText($"{G.path.Apppath}ChannelList.Kira");
                 Console.WriteLine("配置列表重载完毕");
             }
         }

@@ -265,7 +265,7 @@ namespace KiraDX.Bot
                 {
                     if (msg.StartsWith("/k 全局 "))
                     {
-                        KiraDX.Bot.Mirai.ADMINCOMMANDS.sendAll(g,e);
+                        KiraDX.Bot.AllGroup.sendAll(g,e);
                         return;
                     }
                 }
@@ -318,6 +318,20 @@ namespace KiraDX.Bot
                             OnCommanded.onCommanded(g, "mod");
                         }
                         
+                    }
+
+                    if (msg.format().StartsWith("/k channel "))
+                    {
+                        if (msg.format()=="/k channel list")
+                        {
+                            KiraDX.Bot.AllGroup.ChannelList(g);
+                            return;
+                        }
+                        else
+                        {
+                            KiraDX.Bot.AllGroup.ChannelEdit(g);
+                            return;
+                        }
                     }
                 }
 
