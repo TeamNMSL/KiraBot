@@ -16,7 +16,8 @@ namespace KiraDX.Bot.Mod_System
                 {
                     File.Create($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira").Close();
                 }
-                string cfg = File.ReadAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira");
+                //string cfg = File.ReadAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira");
+                string cfg = Users.Info.GetGroupConfig(g.fromGroup).switches;
                 if (cfg.ToLower().Contains("[locked]"))
                 {
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"本群模块已被管理团队锁定，无法切换状态");
@@ -26,7 +27,7 @@ namespace KiraDX.Bot.Mod_System
                 {
                     // /k mod enable cao
                     string[] cmd = g.msg.Split(' ');
-                    string[] FuncList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira").Split(';');
+                    string[] FuncList = Users.cfgs.FunctionList.Split(';');
                     
                     foreach (var item in FuncList)
                     {
@@ -42,6 +43,7 @@ namespace KiraDX.Bot.Mod_System
                             cfg =cfg.Replace(item, " ");
                             
                             File.WriteAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira", cfg);
+                            Users.Info.GroupInfo[g.fromGroup].switches = cfg;
                             KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"已开启{item}模块");
                             return;
                         }
@@ -71,7 +73,8 @@ namespace KiraDX.Bot.Mod_System
                 {
                     File.Create($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira");
                 }
-                string cfg = File.ReadAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira");
+                //string cfg = File.ReadAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira");
+                string cfg = Users.Info.GetGroupConfig(g.fromGroup).switches;
                 if (cfg.ToLower().Contains("[locked]"))
                 {
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"本群模块已被管理团队锁定，无法切换状态");
@@ -97,6 +100,7 @@ namespace KiraDX.Bot.Mod_System
                             }
                             cfg += $"\n{item}";
                             File.WriteAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira", cfg);
+                            Users.Info.GroupInfo[g.fromGroup].switches = cfg;
                             KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"已关闭{item}模块");
                             return;
                         }
@@ -125,7 +129,7 @@ namespace KiraDX.Bot.Mod_System
                     File.Create($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira").Close();
                 }
                 string rt = "[KIRADX模块列表]\n";
-                string[] FuncList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira").Split(';');
+                string[] FuncList = Users.cfgs.FunctionList.Split(';');
                 foreach (var item in FuncList)
                 {
                     if (!item.StartsWith("*"))

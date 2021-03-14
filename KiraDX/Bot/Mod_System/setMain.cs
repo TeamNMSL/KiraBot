@@ -17,11 +17,15 @@ namespace KiraDX.Bot.Mod_System
                 if (g.botid==G.BotList.Laffy)
                 {
                     File.WriteAllText($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira", "Soffy");
+                    Users.Info.GetGroupConfig(g.fromGroup);
+                    Users.Info.GroupInfo[g.fromGroup].mainbot = "Soffy";
                     KiraPlugin.SendGroupMessage(g.s,g.fromGroup,"已切换响应bot为Soffy，走了");
                 }
                 else
                 {
                     File.WriteAllText($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira", "Soffy");
+                    Users.Info.GetGroupConfig(g.fromGroup);
+                    Users.Info.GroupInfo[g.fromGroup].mainbot = "Soffy";
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "已切换响应bot为Soffy，我来力");
                 }
 
@@ -32,11 +36,15 @@ namespace KiraDX.Bot.Mod_System
                 if (g.botid == G.BotList.Soffy)
                 {
                     File.WriteAllText($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira", "Laffy");
+                    Users.Info.GetGroupConfig(g.fromGroup);
+                    Users.Info.GroupInfo[g.fromGroup].mainbot = "Laffy";
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "已切换响应bot为Laffy，走了");
                 }
                 else
                 {
                     File.WriteAllText($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira", "Laffy");
+                    Users.Info.GetGroupConfig(g.fromGroup);
+                    Users.Info.GroupInfo[g.fromGroup].mainbot = "Laffy";
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "已切换响应bot为Laffy，我来力");
                 }
             }

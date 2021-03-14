@@ -9,105 +9,143 @@ namespace KiraDX.Bot.arcaea
     public static partial class arcaea
     {
         public static void Bind(GroupMsg g) {
-            string msg = g.msg;
-            string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind","/arc绑定" };
-            foreach (var item in cmd)
+            try
             {
-                if (msg.StartsWith(item))
+                string msg = g.msg;
+                string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
+                foreach (var item in cmd)
                 {
-                    msg = msg.Replace(item, "");
-                    break;
+                    if (msg.StartsWith(item))
+                    {
+                        msg = msg.Replace(item, "");
+                        break;
+                    }
                 }
-            }
 
-            string fcd = Functions.GetNumberInString(msg).ToString();
-            
-            
-                while (fcd.Length<9)
+                string fcd = Functions.GetNumberInString(msg).ToString();
+
+
+                while (fcd.Length < 9)
                 {
                     fcd = "0" + fcd;
                 }
 
-            JObject Info = GetRecent(fcd);
-            if (Info["status"].ToString() != "0")
-            {
-                KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "绑定失败，好友码正确吗");
-                return;
+                JObject Info = GetRecent(fcd);
+                if (Info["status"].ToString() != "0")
+                {
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "绑定失败，好友码正确吗");
+                    return;
+                }
+                else
+                {
+                    File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini", fcd);
+                    Users.Info.GetUserConfig(g.fromAccount);
+                    if (Users.Info.UserInfo.ContainsKey(g.fromAccount))
+                    {
+                        Users.Info.UserInfo[g.fromAccount].ArcID = fcd;
+                    }
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "绑定成功qwq");
+                    return;
+                }
             }
-            else
+            catch (Exception e)
             {
-                File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini",fcd);
-                KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "绑定成功qwq");
-                return;
+
+                KiraPlugin.SendGroupMessage(g.s, g.fromGroup, e.Message);
             }
         }
         public static void Bind(DisMsg g)
         {
-            string msg = g.msg;
-            string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
-            foreach (var item in cmd)
+            try
             {
-                if (msg.StartsWith(item))
+                string msg = g.msg;
+                string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
+                foreach (var item in cmd)
                 {
-                    msg = msg.Replace(item, "");
-                    break;
+                    if (msg.StartsWith(item))
+                    {
+                        msg = msg.Replace(item, "");
+                        break;
+                    }
+                }
+
+                string fcd = Functions.GetNumberInString(msg).ToString();
+
+
+                while (fcd.Length < 9)
+                {
+                    fcd = "0" + fcd;
+                }
+
+                JObject Info = GetRecent(fcd);
+                if (Info["status"].ToString() != "0")
+                {
+                    KiraPlugin.SendMsg("Wrong friend code", g);
+
+                    return;
+                }
+                else
+                {
+                    File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini", fcd);
+                    Users.Info.GetUserConfig(g.fromAccount);
+                    if (Users.Info.UserInfo.ContainsKey(g.fromAccount))
+                    {
+                        Users.Info.UserInfo[g.fromAccount].ArcID = fcd;
+                    }
+                    KiraPlugin.SendMsg("Bind successfully", g);
+                    return;
                 }
             }
-
-            string fcd = Functions.GetNumberInString(msg).ToString();
-
-
-            while (fcd.Length < 9)
+            catch (Exception e)
             {
-                fcd = "0" + fcd;
-            }
 
-            JObject Info = GetRecent(fcd);
-            if (Info["status"].ToString() != "0")
-            {
-                KiraPlugin.SendMsg("Wrong friend code", g);
-                
-                return;
-            }
-            else
-            {
-                File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini", fcd);
-                KiraPlugin.SendMsg("Bind successfully", g);
-                return;
+                KiraPlugin.SendMsg(e.Message, g);
             }
         }
         public static void Bind(FriendVars g)
         {
-            string msg = g.msg;
-            string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
-            foreach (var item in cmd)
+            try
             {
-                if (msg.StartsWith(item))
+                string msg = g.msg;
+                string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
+                foreach (var item in cmd)
                 {
-                    msg = msg.Replace(item, "");
-                    break;
+                    if (msg.StartsWith(item))
+                    {
+                        msg = msg.Replace(item, "");
+                        break;
+                    }
+                }
+
+                string fcd = Functions.GetNumberInString(msg).ToString();
+
+
+                while (fcd.Length < 9)
+                {
+                    fcd = "0" + fcd;
+                }
+
+                JObject Info = GetRecent(fcd);
+                if (Info["status"].ToString() != "0")
+                {
+                    KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "绑定失败，好友码正确吗");
+                    return;
+                }
+                else
+                {
+                    File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini", fcd);
+                    Users.Info.GetUserConfig(g.fromAccount);
+                    if (Users.Info.UserInfo.ContainsKey(g.fromAccount))
+                    {
+                        Users.Info.UserInfo[g.fromAccount].ArcID = fcd;
+                    }
+                    KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "绑定成功qwq");
+                    return;
                 }
             }
-
-            string fcd = Functions.GetNumberInString(msg).ToString();
-
-
-            while (fcd.Length < 9)
+            catch (Exception e)
             {
-                fcd = "0" + fcd;
-            }
-
-            JObject Info = GetRecent(fcd);
-            if (Info["status"].ToString() != "0")
-            {
-                KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "绑定失败，好友码正确吗");
-                return;
-            }
-            else
-            {
-                File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini", fcd);
-                KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "绑定成功qwq");
-                return;
+                KiraPlugin.SendFriendMessage(g.s, g.fromAccount, e.Message);
             }
         }
     }

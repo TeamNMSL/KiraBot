@@ -22,12 +22,15 @@ namespace KiraDX.Bot.arcaea
             try
             {
                 string msg = g.msg;
-                
-                if (!File.Exists($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini"))
+
+                if (Users.Info.GetUserConfig(g.fromAccount).ArcID == "-1")
                 {
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "你还没绑定辣！w");
                     return;
                 }
+
+                //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
+                string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
 
                 if (msg == "查分")
                 {
@@ -67,7 +70,7 @@ namespace KiraDX.Bot.arcaea
                         break;
                     }
                 }
-                string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
+                //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 SongScore info = GetSongScore(friendcode, msg, diff.ToString());
                 JObject UserInfo = info.User;
                 JObject ScoreInfo = info.Score;
@@ -150,11 +153,14 @@ namespace KiraDX.Bot.arcaea
             {
                 string msg = g.msg;
 
-                if (!File.Exists($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini"))
+                if (Users.Info.GetUserConfig(g.fromAccount).ArcID == "-1")
                 {
                     KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "你还没绑定辣！w");
                     return;
                 }
+
+                //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
+                string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
 
                 if (msg == "查分")
                 {
@@ -194,7 +200,7 @@ namespace KiraDX.Bot.arcaea
                         break;
                     }
                 }
-                string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
+               // string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 SongScore info = GetSongScore(friendcode, msg, diff.ToString());
                 JObject UserInfo = info.User;
                 JObject ScoreInfo = info.Score;
@@ -277,12 +283,14 @@ namespace KiraDX.Bot.arcaea
             {
                 string msg = g.msg;
 
-                if (!File.Exists($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini"))
+                if (Users.Info.GetUserConfig(g.fromAccount).ArcID == "-1")
                 {
-                    KiraPlugin.SendMsg("Please bind your arcaea account before check your score",g);
-                    
+                    KiraPlugin.SendMsg("Please bind your arcaea account before check your score", g);
                     return;
                 }
+
+                //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
+                string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
 
                 if (msg == "查分")
                 {
@@ -322,7 +330,7 @@ namespace KiraDX.Bot.arcaea
                         break;
                     }
                 }
-                string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
+               // string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 SongScore info = GetSongScore(friendcode, msg, diff.ToString());
                 JObject UserInfo = info.User;
                 JObject ScoreInfo = info.Score;

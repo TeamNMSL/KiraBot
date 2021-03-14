@@ -246,11 +246,13 @@ namespace KiraDX.Bot
                 GroupMsg g = new GroupMsg(msg, fromGroup, fromAccount, botid, session,e);
                 Pretreatment.Pretreatment_MainBot(g);
                 string[] cmd = msg.Split(' ');
-                if (BotFunc.IsBanned(g.fromAccount))
+                if (Users.Info.GetUserConfig(fromAccount).IsBanned)
                 {
                     return;
                 }
+
                 #endregion
+                
 
                 if ((msg.format()=="/help"||msg.format() == "/k help")&&BotFunc.IsMainBot(g))
                 {
@@ -261,7 +263,7 @@ namespace KiraDX.Bot
                     
                 }
                 #region admin
-                if (BotFunc.isAdmin(g))
+                if (Users.Info.GetUserConfig(g.fromAccount).IsAdmin)
                 {
                     if (msg.StartsWith("/k 全局 "))
                     {

@@ -103,7 +103,11 @@ namespace KiraDX
                 }
                */
 
-        
+        public static class BotSession {
+           public  static Mirai_CSharp.MiraiHttpSession Laffy=null;
+           public  static Mirai_CSharp.MiraiHttpSession Soffy = null;
+           public  static Mirai_CSharp.MiraiHttpSession Miffy = null;
+        }
         public static class BotInfo {
             public static string[] Groups = { "", "", "" };
         }
@@ -151,11 +155,13 @@ namespace KiraDX
             public static string FunctionList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira");
             public static string NonStudy= File.ReadAllText($"{G.path.Apppath}NonStudy.Kira");
             public static string Channel = File.ReadAllText($"{G.path.Apppath}ChannelList.Kira");
+            public static string SystemFunc = File.ReadAllText($"{G.path.Apppath}SystemFunc.kira");
             public static void reload() {
                 
                 FunctionList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira");
                 NonStudy = File.ReadAllText($"{G.path.Apppath}NonStudy.Kira");
                 Channel = File.ReadAllText($"{G.path.Apppath}ChannelList.Kira");
+                SystemFunc= File.ReadAllText($"{G.path.Apppath}SystemFunc.kira");
                 Console.WriteLine("配置列表重载完毕");
             }
         }
@@ -165,7 +171,56 @@ namespace KiraDX
             ban.Reload();
             cfgs.reload();
             White.Reload();
+            Info.Reload();
             
+        }
+        public static class Info {
+            public static Dictionary<long, ConfigUser> UserInfo = new Dictionary<long, ConfigUser>() { };
+            public static Dictionary<long, ConfigGroup> GroupInfo = new Dictionary<long, ConfigGroup>() { };
+            public static ConfigGroup GetGroupConfig(long id)
+            {
+                try
+                {
+                    if (!GroupInfo.ContainsKey(id))
+                    {
+                        GroupInfo.Add(id, new ConfigGroup(id));
+                    }
+                    return GroupInfo[id];
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+
+            }
+            public static ConfigUser GetUserConfig(long id) {
+                try
+                {
+                    if (!UserInfo.ContainsKey(id))
+                    {
+                        UserInfo.Add(id, new ConfigUser(id));
+                    }
+                    return UserInfo[id];
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+               
+            }
+            public static void Reload() {
+                /*  foreach (var item in UserInfo)
+                  {
+                      UserInfo[item.Key] = new ConfigUser(item.Key);
+                  }
+                  foreach (var item in GroupInfo)
+                  {
+                      GroupInfo[item.Key] = new ConfigGroup(item.Key);
+                  }*/
+                UserInfo.Clear();
+                GroupInfo.Clear();
+                Console.WriteLine("用户数据重载完毕");
+            }
         }
      public static long botMsgNum=0;
     }

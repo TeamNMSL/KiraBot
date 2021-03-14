@@ -49,7 +49,7 @@ namespace KiraDX.Bot.Others
             //INSERT INTO Data VALUES ("key","var","Group","IsPublic")
             try
             {
-                if (Users.cfgs.NonStudy.Contains(g.fromAccount.ToString()))
+                if (Users.Info.GetUserConfig(g.fromAccount).IsStudy)
                 {
                     return;
                 }

@@ -67,7 +67,7 @@ namespace KiraDX
                     return true;
                 }
 
-                if (!File.Exists($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira"))
+                if (Users.Info.GetGroupConfig(g.fromGroup).mainbot=="none")
                 {
                     string str = "";
                     if (g.botid == G.BotList.Laffy)
@@ -83,9 +83,11 @@ namespace KiraDX
                         return false;
                     }
                     File.WriteAllText($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira", str);
+                    Users.Info.GroupInfo[g.fromGroup].mainbot = str;
                 }
                 long bid = 0;
-                string Mainbot = File.ReadAllText($"{G.path.Apppath}{G.path.MainBotData}{g.fromGroup}.kira");
+                string Mainbot =Users.Info.GetGroupConfig(g.fromGroup).mainbot;
+                //Console.WriteLine(Mainbot);
                 if (Mainbot.Contains("Soffy") || Mainbot.Contains("YUI"))
                 {
                     bid = G.BotList.Soffy;
@@ -134,6 +136,21 @@ namespace KiraDX
                 return false;
             }
         }
+        public static bool isWhite(long g)
+        {
+            if (isAdmin(g))
+            {
+                return true;
+            }
+            if (Users.White.WhiteUser.Contains(g.ToString()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// 我想知道这个开关是否打开？
@@ -144,7 +161,7 @@ namespace KiraDX
         public static bool FuncSwith(GroupMsg g,string name) {
             try
             {
-                string cfg=File.ReadAllText($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira");
+                string cfg=Users.Info.GetGroupConfig(g.fromGroup).switches;
                 if (cfg.Contains(name))
                 {
                     return false;
@@ -169,7 +186,7 @@ namespace KiraDX
         {
             try
             {
-                string cfg = File.ReadAllText($"{G.path.Apppath}SystemFunc.kira");
+                string cfg = Users.cfgs.SystemFunc;
                 if (cfg.Contains(name))
                 {
                     return false;
@@ -202,6 +219,20 @@ namespace KiraDX
 
 
         }
+        public static bool isAdmin(long g)
+        {
+
+            if (Users.White.adminlst.Contains(g.ToString()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
         /// <summary>
         /// 是否为屏蔽词
         /// </summary>
@@ -219,5 +250,7 @@ namespace KiraDX
             }
             return false;
         }
+
+       
     }
 }
