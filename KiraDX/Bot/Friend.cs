@@ -429,6 +429,28 @@ namespace KiraDX.Bot
                  
                 }
             }
+
+            if (g.msg.format().StartsWith("/k todev ") || g.msg.format().StartsWith("/k todev-l "))
+            {
+                try
+                {
+                    string sts = "public";
+                    if (g.msg.format().StartsWith("/k todev-l "))
+                    {
+                        sts = "private";
+                    }
+                    KiraPlugin.sendMessage(g, $"[{sts}]\n[私讯]\n[Account {g.fromAccount}]\n{g.msg.Split(" ", count: 3)[2]}", true, IsToFriend: true, ToFriend: 1848200159);
+                    KiraPlugin.sendMessage(g, "已传达");
+                    return;
+                }
+                catch (Exception ex)
+                {
+
+                    KiraPlugin.sendMessage(g, ex.Message);
+                    return;
+                }
+            }
+
             return;
         }
     }

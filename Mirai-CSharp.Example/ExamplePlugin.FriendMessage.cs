@@ -10,6 +10,15 @@ namespace Mirai_CSharp.Example
 {
     public partial class ExamplePlugin
     {
+        public Task<bool> TempMessage(MiraiHttpSession session, ITempMessageEventArgs e)
+        {
+            return System.Threading.Tasks.Task<bool>.Run(()=> {
+                session.SendTempMessageAsync(e.Sender.Id,e.Sender.Group.Id,new MessageBuilder().AddPlainMessage("不支持临时消息，请回群用罢"));
+                return true;
+            });
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(KiraDX.KiraPlugin.Event_FriendMessage), new KiraDX.KiraPlugin.FriendVar(session, null));
+            // throw new System.NotImplementedException();
+        }
         public async Task<bool> FriendMessage(MiraiHttpSession session, IFriendMessageEventArgs e) // 法1: 使用 IMessageBase[]
         {
             ThreadPool.QueueUserWorkItem(new WaitCallback(KiraDX.KiraPlugin.Event_FriendMessage), new KiraDX.KiraPlugin.FriendVar(session, e));

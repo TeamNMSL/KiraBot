@@ -69,9 +69,15 @@ namespace Mirai_CSharp.Example
                 });
                 try
                 {
-                    QBCBot.CorruptedDataReceived += (sender, e) => { };
-                    QBCBot.BotBroadcastReceived += (sender, e) => {  };
-                    QBCBot.RepoCalled += (sender, e) => { };
+                    QBCBot.CorruptedDataReceived += (sender, e) => { 
+                    
+                    };
+                    QBCBot.BotBroadcastReceived += (sender, e) => {  
+                    
+                    };
+                    QBCBot.RepoCalled += (sender, e) => { 
+                   
+                    };
                     QBCBot.BotMessageReceived += (sender, e) => //绑定接收到其它Bot的消息事件的方法
                     {
                         if (e.Type == Team123it.QBC.Client.MessageType.Bot) //如果是其它Bot主动发送的消息而不是系统消息或其它Bot回复的消息

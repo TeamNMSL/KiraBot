@@ -430,7 +430,11 @@ namespace KiraDX.Bot
                                     }
                                     else
                                     {
-                                        KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
+                                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                                    {
+                                        return;
+                                    }
+                                    KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
                                         return;
                                     }
                                 }
@@ -450,6 +454,10 @@ namespace KiraDX.Bot
                                 }
                                 else
                                 {
+                                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                                    {
+                                        return;
+                                    }
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
                                     return;
                                 }
@@ -469,6 +477,10 @@ namespace KiraDX.Bot
                                 }
                                 else
                                 {
+                                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                                    {
+                                        return;
+                                    }
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再查分");
 
                                     return;
@@ -490,6 +502,10 @@ namespace KiraDX.Bot
                                 }
                                 else
                                 {
+                                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                                    {
+                                        return;
+                                    }
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再绑定");
                                     return;
                                 }
@@ -508,6 +524,10 @@ namespace KiraDX.Bot
                                 }
                                 else
                                 {
+                                    if (!BotFunc.FuncSwith(g,"模块提示"))
+                                    {
+                                        return;
+                                    }
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群Arc模块处于关闭状态，请使用/k mod enable arc打开本群Arc模块后再随机");
                                     return;
                                 }
@@ -637,6 +657,11 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -653,6 +678,10 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -670,6 +699,10 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -687,6 +720,10 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -704,6 +741,10 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -719,6 +760,10 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -735,6 +780,10 @@ namespace KiraDX.Bot
                             }
                             else
                             {
+                                if (!BotFunc.FuncSwith(g, "模块提示"))
+                                {
+                                    return;
+                                }
                                 KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群工具处于关闭状态，请使用/k mod enable 工具打开本群工具模块后再操作");
                                 return;
                             }
@@ -743,10 +792,31 @@ namespace KiraDX.Bot
 
                         #endregion
 
-                        
+                       
 
                         if (BotFunc.IsMainBot(g))
                         {
+                            if (g.msg.format().StartsWith("/k todev ")|| g.msg.format().StartsWith("/k todev-l "))
+                            {
+                                try
+                                {
+                                    string sts = "public";
+                                    if (g.msg.format().StartsWith("/k todev-l "))
+                                    {
+                                        sts = "private";
+                                    }
+                                    KiraPlugin.sendMessage(g, $"[{sts}]\n[Group {g.fromGroup}]\n[Account {g.fromAccount}]\n{g.msg.Split(" ", count: 3)[2]}",true,IsToFriend:true,ToFriend:1848200159);
+                                    KiraPlugin.sendMessage(g, "已传达");
+                                    return;
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    KiraPlugin.sendMessage(g, ex.Message);
+                                    return;
+                                }
+                            }
+
                             if (msg.ToLower() == "/k dismiss group")
                             {
                                 KiraDX.Bot.Mod_System.Dismiss.Dismiss_Group(g, e);

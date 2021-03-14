@@ -87,6 +87,10 @@ namespace KiraDX.Bot.bottle
                 }
                 else 
                 {
+                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                    {
+                        return;
+                    }
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/k mod enable 漂流瓶 再使用漂流瓶功能");
 
                 }
@@ -126,6 +130,10 @@ namespace KiraDX.Bot.bottle
                 }
                 else
                 {
+                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                    {
+                        return;
+                    }
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/k mod enable 漂流瓶 再使用漂流瓶功能");
 
                 }
@@ -168,6 +176,10 @@ namespace KiraDX.Bot.bottle
                 }
                 else
                 {
+                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                    {
+                        return;
+                    }
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/k mod enable 漂流瓶 再使用漂流瓶功能");
 
                 }

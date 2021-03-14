@@ -10,7 +10,9 @@ namespace Mirai_CSharp.Example
                                  INewFriendApply,
                                  IGroupApply,
                                  IBotInvitedJoinGroup,
-                                 IDisconnected
-    { }
-      
+                                 IDisconnected, ITempMessage
+    {
+        
+    }
+
 }

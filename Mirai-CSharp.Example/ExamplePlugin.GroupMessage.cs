@@ -20,6 +20,7 @@ namespace Mirai_CSharp.Example
     public partial class ExamplePlugin
     {
         
+
         public async Task<bool> GroupMessage(MiraiHttpSession session, IGroupMessageEventArgs e) // 法1: 使用 IMessageBase[]
         {
             
