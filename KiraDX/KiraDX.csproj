@@ -28,4 +28,10 @@
     <PackageReference Include="TensorFlow.NET" Version="0.33.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Team123it.QBC.Client">
+      <HintPath>..\..\Team123it.QBC.Client.x64\Team123it.QBC.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

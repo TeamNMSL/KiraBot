@@ -20,4 +20,10 @@
     <ProjectReference Include="..\KiraDX\KiraDX.csproj" />
   </ItemGroup>
   
+  <ItemGroup>
+    <Reference Include="Team123it.QBC.Client">
+      <HintPath>..\..\Team123it.QBC.Client.x64\Team123it.QBC.Client.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
 </Project>

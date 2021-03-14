@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 using DSharpPlus;
+using Team123it.QBC.Client;
 
 namespace Mirai_CSharp.Example
 {
@@ -33,6 +34,7 @@ namespace Mirai_CSharp.Example
                 Soffy.AddPlugin(plugin);
                 Soffy.ConnectAsync(Soffy_options, KiraDX.G.BotList.Soffy);
 
+
             Task.Run(async () =>
             {
                 var discord = new DiscordClient(new DiscordConfiguration()
@@ -58,7 +60,45 @@ namespace Mirai_CSharp.Example
                 
                 
             });
+
             
+            Task.Run(async () => {
+                Bot QBCBot = new Bot(new BotInfo() //初始化Bot实例
+                {
+                    Token =KiraDX.G.QBCToken //Bot的Token
+                });
+                try
+                {
+                    QBCBot.CorruptedDataReceived += (sender, e) => { };
+                    QBCBot.BotBroadcastReceived += (sender, e) => {  };
+                    QBCBot.RepoCalled += (sender, e) => { };
+                    QBCBot.BotMessageReceived += (sender, e) => //绑定接收到其它Bot的消息事件的方法
+                    {
+                        if (e.Type == Team123it.QBC.Client.MessageType.Bot) //如果是其它Bot主动发送的消息而不是系统消息或其它Bot回复的消息
+                        {
+                            
+                            if (e.Message == "ping")
+                            {
+                                e.ReplyMessage("Pong!"); //回复消息
+                            }
+                            
+                        }
+                    };
+                    await QBCBot.ConnectAsync(); //连接QBC服务器
+                    await Task.Delay(-1); //无限期等待
+                }
+                catch (QBCException ex) //如果出现了QBC系统异常
+                {
+                    /*
+                    QBCBot.Disconnect(); //断开连接
+                    Console.WriteLine($"Oops! An error occurred:{ex.GetType().ToString()}:{ex.Message}({ex.Code})");
+                    Console.WriteLine("Press any key to close program.");
+                    Console.ReadKey();
+                    await Task.CompletedTask;*/
+                }
+
+
+            });
 
             while (true)
             {
