@@ -43,131 +43,143 @@ namespace KiraDX
                 MessageBuilder final = new MessageBuilder();
                 if (IsChain)
                 {
-                    char[] chars = msg.ToCharArray();
-                    bool CodeStart = false;
-                    string Text = "";
-                    string Code = "";
-                    MessageBuilder messageBuilder = new MessageBuilder();
-                    foreach (var c in chars)
+                    if (true)
                     {
-                        if (c == '[')
+                        final = KiraDX.Frame.Mirai.GetChainAsync(msg, g.s).Result;
+                    }
+                    else
+                    {
+                        char[] chars = msg.ToCharArray();
+                        bool CodeStart = false;
+                        string Text = "";
+                        string Code = "";
+                        MessageBuilder messageBuilder = new MessageBuilder();
+                        foreach (var c in chars)
                         {
-                            if (CodeStart)
+                            if (c == '[')
                             {
-                                /*True,换句话说如果在这里了，应该是像 114514[[114514] 这样的文本
-                                 *                                      ▲
-                                 * 
-                                 * 
-                                */
+                                if (CodeStart)
+                                {
+                                    /*True,换句话说如果在这里了，应该是像 114514[[114514] 这样的文本
+                                     *                                      ▲
+                                     * 
+                                     * 
+                                    */
 
-                                //将前面的内容作为普通文本记录
-                                Text += Code;
-                                Code = "";
-                                Code += c.ToString();
+                                    //将前面的内容作为普通文本记录
+                                    Text += Code;
+                                    Code = "";
+                                    Code += c.ToString();
+                                }
+                                else
+                                {
+                                    /*
+                                     *False,这个位置应该像是 114514[1919]这样的文本
+                                     *                          ▲
+                                     *
+                                     */
+                                    CodeStart = true;
+                                    //开始记录code内容
+                                    Code += c.ToString();
+                                }
                             }
-                            else
+                            else if (c == ']')
                             {
-                                /*
-                                 *False,这个位置应该像是 114514[1919]这样的文本
-                                 *                          ▲
-                                 *
-                                 */
-                                CodeStart = true;
-                                //开始记录code内容
-                                Code += c.ToString();
-                            }
-                        }
-                        else if (c == ']')
-                        {
-                            if (CodeStart)
-                            {
-                                /*True,换句话说如果在这里了，应该是像 114514[[114514] 这样的文本
-                                 *                                             ▲
-                                 * 
-                                */
-                                CodeStart = false;
-                                //记录code并转义
-                                //记录
-                                Code += c.ToString();
-                                messageBuilder.AddPlainMessage(Text);
+                                if (CodeStart)
+                                {
+                                    /*True,换句话说如果在这里了，应该是像 114514[[114514] 这样的文本
+                                     *                                             ▲
+                                     * 
+                                    */
+                                    CodeStart = false;
+                                    //记录code并转义
+                                    //记录
+                                    Code += c.ToString();
+                                    messageBuilder.AddPlainMessage(Text);
 
-                                if (Code.Contains("mirai:face:"))
-                                {
-                                    messageBuilder.AddFaceMessage(int.Parse(Functions.TextGainCenter("[mirai:face:", "]", Code)));
-                                }
-                                else if (Code.Contains("mirai:at:"))
-                                {
-                                    messageBuilder.AddAtMessage(long.Parse(Functions.TextGainCenter("[mirai:at:", "]", Code)));
-                                }
-                                else if (Code.Contains("mirai:image:"))
-                                {
-                                    if (Code.Contains("mirai:image:File:"))
+                                    if (Code.Contains("mirai:face:"))
                                     {
-                                        ImageMessage pic = await session.UploadPictureAsync(PictureTarget.Group, Functions.TextGainCenter("[mirai:image:File:", "]", Code));
-                                        IMessageBase[] chain = new IMessageBase[] { pic };
-                                        messageBuilder.Add(chain[0]);
+                                        messageBuilder.AddFaceMessage(int.Parse(Functions.TextGainCenter("[mirai:face:", "]", Code)));
+                                    }
+                                    else if (Code.Contains("mirai:at:"))
+                                    {
+                                        messageBuilder.AddAtMessage(long.Parse(Functions.TextGainCenter("[mirai:at:", "]", Code)));
+                                    }
+                                    else if (Code.Contains("mirai:image:"))
+                                    {
+                                        if (Code.Contains(@".\"))
+                                        {
+                                            Code = Code.Replace(@".\", G.path.Apppath);
+                                        }
+                                        if (Code.Contains("mirai:image:File:"))
+                                        {
+
+                                            ImageMessage pic = await session.UploadPictureAsync(PictureTarget.Group, Functions.TextGainCenter("[mirai:image:File:", "]", Code));
+                                            IMessageBase[] chain = new IMessageBase[] { pic };
+                                            messageBuilder.Add(chain[0]);
+                                        }
+                                        else
+                                        {
+                                            messageBuilder.AddImageMessage(imageId: Functions.TextGainCenter("mirai:image:", "]", Code));
+                                        }
+
+                                    }
+                                    else if (Code.Contains("mirai:flashimage:"))
+                                    {
+                                        if (Code.Contains("mirai:flashimage:File:"))
+                                        {
+
+                                            messageBuilder.AddFlashImageMessage(imageId: session.UploadPictureAsync(PictureTarget.Group, Functions.TextGainCenter("[mirai:flashimage:File:", "]", Code)).Result.ImageId);
+                                        }
+                                        else
+                                        {
+                                            messageBuilder.AddFlashImageMessage(imageId: Functions.TextGainCenter("mirai:flashimage:", "]", Code));
+                                        }
+
+
                                     }
                                     else
                                     {
-                                        messageBuilder.AddImageMessage(imageId: Functions.TextGainCenter("mirai:image:", "]", Code));
+                                        messageBuilder.AddPlainMessage(Code);
                                     }
-
-                                }
-                                else if (Code.Contains("mirai:flashimage:"))
-                                {
-                                    if (Code.Contains("mirai:flashimage:File:"))
-                                    {
-
-                                        messageBuilder.AddFlashImageMessage(imageId: session.UploadPictureAsync(PictureTarget.Group, Functions.TextGainCenter("[mirai:flashimage:File:", "]", Code)).Result.ImageId);
-                                    }
-                                    else
-                                    {
-                                        messageBuilder.AddFlashImageMessage(imageId: Functions.TextGainCenter("mirai:flashimage:", "]", Code));
-                                    }
-
+                                    Code = "";
+                                    Text = "";
 
                                 }
                                 else
                                 {
-                                    messageBuilder.AddPlainMessage(Code);
+                                    /*
+                                     *False,这个位置应该像是 114514[1919]]这样的文本
+                                     *                                 ▲
+                                     */
+                                    //当作普通文本计入
+                                    Text += c.ToString();
                                 }
-                                Code = "";
-                                Text = "";
 
                             }
                             else
                             {
-                                /*
-                                 *False,这个位置应该像是 114514[1919]]这样的文本
-                                 *                                 ▲
-                                 */
-                                //当作普通文本计入
-                                Text += c.ToString();
+                                if (CodeStart)
+                                {
+                                    //code内容
+                                    Code += c.ToString();
+                                }
+                                else
+                                {
+                                    //普通文本
+                                    Text += c.ToString();
+                                }
+
                             }
 
                         }
-                        else
+                        if (CodeStart)
                         {
-                            if (CodeStart)
-                            {
-                                //code内容
-                                Code += c.ToString();
-                            }
-                            else
-                            {
-                                //普通文本
-                                Text += c.ToString();
-                            }
-
+                            Text = Code;
                         }
-
+                        messageBuilder.AddPlainMessage(Text);
+                        final = messageBuilder;
                     }
-                    if (CodeStart)
-                    {
-                        Text = Code;
-                    }
-                    messageBuilder.AddPlainMessage(Text);
-                    final = messageBuilder;
                     
                     //await session.SendGroupMessageAsync(GroupID, messageBuilder);
 
@@ -235,7 +247,7 @@ namespace KiraDX.Bot
         private delegate void HsoCommand(GroupMsg g);
         private delegate void Switches(GroupMsg g,IGroupMessageEventArgs e);
         #endregion
-        public  static async void GroupMessage(string msg,long fromGroup,long fromAccount,long botid,Mirai_CSharp.MiraiHttpSession session, IGroupMessageEventArgs e ) {
+        public  static async void GroupMessage(string msg,long fromGroup,long fromAccount,long botid,Mirai_CSharp.MiraiHttpSession session, IGroupMessageEventArgs e) {
             try
             {
                 
@@ -252,15 +264,57 @@ namespace KiraDX.Bot
                 }
 
                 #endregion
-                
 
-                if ((msg.format()=="/help"||msg.format() == "/k help")&&BotFunc.IsMainBot(g))
+                if (msg.format().Contains("/k bat"))
                 {
-                    KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}default.png");
-                    KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}rule.png");
-                    KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}attention.png");
-                    OnCommanded.onCommanded(g, "help");
+                    string[] coms;
+                    if (msg.Contains("\r\n"))
+                    {
+                    coms     = msg.Split("\r\n");
+                    }
+                    else if (msg.Contains("\n\r"))
+                    {
+                        coms = msg.Split("\n\r");
+                    }
+                    else if (msg.Contains("\n"))
+                    {
+                        coms = msg.Split('\n');
+                    }
+                    else if (msg.Contains("\r"))
+                    {
+                        coms = msg.Split('\r');
+                    }
+                    else
+                    {
+                        coms = msg.Split('\n');
+                    }
+                    foreach (var item in coms)
+                    {
+                        if (!item.format().StartsWith("/k bat"))
+                        {
+                            
+                            IGroupMessageEventArgs my_arg = new GroupMessageEventArgs(new IMessageBase[] {new PlainMessage(item) },e.Sender);
+                            GroupMessage(item,fromGroup,fromAccount,botid,session,my_arg);
+                            System.Threading.Thread.Sleep(1000);
+                        }
+                    }
                     return;
+                }
+
+                if ((msg.Contains("/k help")&&BotFunc.IsMainBot(g)))
+                {
+                    if (File.Exists($"{ G.path.Apppath}{ G.path.help}{msg.Replace("/k help ","")}.txt"))
+                    {
+                        KiraPlugin.sendMessage(g, File.ReadAllText($"{ G.path.Apppath}{ G.path.help}{msg.Replace("/k help ", "")}.txt"),true);
+                    }
+                    else
+                    {
+                        KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}default.png");
+                        KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}rule.png");
+                        KiraPlugin.SendGroupPic(g.s, fromGroup, $"{G.path.Apppath}{G.path.help}attention.png");
+                        OnCommanded.onCommanded(g, "help");
+                        return;
+                    }
                     
                 }
                 #region admin
@@ -268,7 +322,7 @@ namespace KiraDX.Bot
                 {
                     if (msg.StartsWith("/k 全局 "))
                     {
-                        KiraDX.Bot.AllGroup.sendAll(g,e);
+                        KiraDX.Bot.AllGroup.sendAll(g);
                         return;
                     }
                 }

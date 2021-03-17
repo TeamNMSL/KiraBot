@@ -106,7 +106,7 @@ namespace KiraDX.Bot
             return true;
         
         }
-        public static async void sendAll(GroupMsg g, IGroupMessageEventArgs e) {
+        public static async void sendAll(GroupMsg g) {
             if (g.botid==G.BotList.Miffy)
             {
                 return;
