@@ -10,6 +10,7 @@ namespace KiraDX
         public long ID;
         public bool IsBanned;
         public string ArcID = "-1";
+        public string SdvxCode = "-1";
         public bool IsStudy;
         public bool IsWhite;
         public bool IsAdmin;
@@ -32,6 +33,15 @@ namespace KiraDX
             {
                 ArcID = "-1";
             }
+            if (File.Exists($"{G.Sdvx.CodePath}{ID}.ini"))
+            {
+                SdvxCode = File.ReadAllText($"{G.Sdvx.CodePath}{ID}.ini");
+            }
+            else
+            {
+                SdvxCode = "-1";
+            }
+
             if (BotFunc.isWhite(ID))
             {
                 IsWhite = true;
