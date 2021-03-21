@@ -722,10 +722,12 @@ namespace KiraDX.Bot
                                         return;
                                     }
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群sdvx模块处于关闭状态，请使用/k mod enable sdvx 打开本群sdvx模块后再操作");
+                                    
                                     return;
                                 }
                                
                                 SDVX.UserBind.Bind_UserID(g);
+                                OnCommanded.onCommanded(g, "sdvx");
                                 return;
                             }
                             if (msg.format().StartsWith("/sv bind "))
@@ -737,9 +739,11 @@ namespace KiraDX.Bot
                                         return;
                                     }
                                     KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群sdvx模块处于关闭状态，请使用/k mod enable sdvx 打开本群sdvx模块后再操作");
+                                    
                                     return;
                                 }
                                 SDVX.UserBind.Bind_UserName(g);
+                                OnCommanded.onCommanded(g, "sdvx");
                                 return;
                             }
                             if (msg.format()=="/sv")
@@ -754,6 +758,7 @@ namespace KiraDX.Bot
                                     return;
                                 }
                                 SDVX.GetRecent.Recent(g);
+                                OnCommanded.onCommanded(g, "sdvx");
                                 return;
                             }
                             if (msg.format().StartsWith("/sv info "))
@@ -768,6 +773,7 @@ namespace KiraDX.Bot
                                     return;
                                 }
                                 SDVX.GetRecent.info(g);
+                                OnCommanded.onCommanded(g, "sdvx");
                                 return;
                             }
                         }
