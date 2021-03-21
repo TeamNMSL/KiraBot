@@ -756,6 +756,20 @@ namespace KiraDX.Bot
                                 SDVX.GetRecent.Recent(g);
                                 return;
                             }
+                            if (msg.format().StartsWith("/sv info "))
+                            {
+                                if (!BotFunc.FuncSwith(g, "sdvx"))
+                                {
+                                    if (!BotFunc.FuncSwith(g, "模块提示"))
+                                    {
+                                        return;
+                                    }
+                                    KiraPlugin.SendGroupMessage(g.s, fromGroup, "本群sdvx模块处于关闭状态，请使用/k mod enable sdvx 打开本群sdvx模块后再操作");
+                                    return;
+                                }
+                                SDVX.GetRecent.info(g);
+                                return;
+                            }
                         }
                        
 
