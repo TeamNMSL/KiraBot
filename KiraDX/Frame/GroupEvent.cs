@@ -156,7 +156,7 @@ namespace KiraDX
                 }
                 else
                 {
-                    if (G.EventCfg.fool)
+                    if (G.EventCfg.fool && Functions.GetRandomNumber(0, 2) != 1)
                     {
                         msg = msg.rvs();
                     }
