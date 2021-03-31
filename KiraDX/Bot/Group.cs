@@ -52,7 +52,10 @@ namespace KiraDX
                 }
                 else
                 {
-
+                    if (G.EventCfg.fool)
+                    {
+                        msg = msg.rvs();
+                    }
                     MessageBuilder builder = new MessageBuilder();
                     builder.AddPlainMessage(msg);
                     final = builder;
@@ -128,6 +131,7 @@ namespace KiraDX.Bot
                 {
                     return;
                 }
+                
 
                 #endregion
 
@@ -223,7 +227,7 @@ namespace KiraDX.Bot
                 {
                     if (msg == "/k pass")
                     {
-                        KiraPlugin.sendMessage(g, $"bot给您使用不是义务，如果您是抱着用bot是义务的心态来加bot，那么请回，如果被我们察觉到类似的想法，有概率被挂，密码是{g.fromAccount*3}");
+                        KiraPlugin.sendMessage(g, $"bot给您使用不是义务，如果您是抱着用bot是义务的心态来加bot，那么请回，如果被我们察觉到类似的想法，有概率被挂，密码是{g.fromAccount*3}\n不要试图传播密码给其他人，每个人的密码都不一样的，第一次没加上，直到下一次重启那就都加不上，不要因为你的好心而坑了你的朋友");
                         OnCommanded.onCommanded(g, "GetPassword");
                         return;
                     }
@@ -336,7 +340,7 @@ namespace KiraDX.Bot
                     {
                         #region arcaea
 
-                        string[]  dic = new []{ "查分", "/r", "/a", "/arc", "/最近", "/arς", "/αrc", @"/@rc", "/ARForest", "/ārc","查" };
+                        string[]  dic = new []{ "查分", "/r", "/a", "/arc", "/最近", "/arς", "/αrc", @"/@rc", "/ARForest", "/ārc" };
                             foreach (var item in dic)
                             {
                                 if (msg.format() == item)
@@ -383,7 +387,7 @@ namespace KiraDX.Bot
                                 }
                             }
                         }
-                        dic = new[] { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info", "查" };
+                        dic = new[] { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info" };
                         foreach (var item in dic)
                         {
                             if (msg.format().StartsWith(item))

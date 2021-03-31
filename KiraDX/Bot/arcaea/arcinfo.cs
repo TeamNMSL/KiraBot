@@ -32,13 +32,13 @@ namespace KiraDX.Bot.arcaea
                 //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
 
-                if (msg == "查分"||msg=="查")
+                if (msg == "查分")
                 {
                     Arc(g);
                     return;
                 }
 
-                string[] cmd = { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info","查" };
+                string[] cmd = { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info"};
                 foreach (var item in cmd)
                 {
                     if (msg.StartsWith(item))

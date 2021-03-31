@@ -4,6 +4,7 @@ using Mirai_CSharp;
 using Mirai_CSharp.Models;
 using System.Threading;
 using Mirai_CSharp.Extensions;
+using System.Linq;
 
 namespace KiraDX
 {
@@ -147,6 +148,7 @@ namespace KiraDX
 
             try
             {
+
                 if (ToChain)
                 {
                     IMessageBuilder builder = KiraDX.Frame.Mirai.GetChainAsync(msg,session).Result;
@@ -154,6 +156,10 @@ namespace KiraDX
                 }
                 else
                 {
+                    if (G.EventCfg.fool)
+                    {
+                        msg = msg.rvs();
+                    }
                     IMessageBuilder builder = new MessageBuilder();
                     builder.AddPlainMessage(msg);
                     await session.SendGroupMessageAsync(GroupID, builder);
