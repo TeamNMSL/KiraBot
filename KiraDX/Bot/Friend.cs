@@ -117,8 +117,17 @@ namespace KiraDX.Bot
         public static async void FriendAdd(Object oj) {
             //问题一:?过不过申请随缘
             //回答: 1
-            
             FriendAddVars f = oj as FriendAddVars;
+
+            if (f.session.QQNumber != G.BotList.Calista)
+            {
+                await f.session.HandleNewFriendApplyAsync(f.e, FriendApplyAction.Allow);
+                System.Threading.Thread.Sleep(5000);
+
+                KiraDX.Bot.Mod_System.help.GetHelp(new FriendVars("", f.e.FromQQ, (long)f.session.QQNumber, f.session, null));
+
+            }
+            return;
             if (BotFunc.IsBanned(f.e.FromQQ))
             {
                 await f.session.HandleNewFriendApplyAsync(f.e, FriendApplyAction.Deny, "略略略");
@@ -197,15 +206,13 @@ namespace KiraDX.Bot
                     IsAgree = false;
                 }
             }*/
-            if (f.session.QQNumber!=G.BotList.Miffy&&IsAgree)
+            if (f.session.QQNumber!=G.BotList.Calista&&IsAgree)
             {
                 await f.session.HandleNewFriendApplyAsync(f.e, FriendApplyAction.Allow);
                 System.Threading.Thread.Sleep(5000);
-                KiraPlugin.SendFriendMessage(f.session, f.e.FromQQ, "您好，欢迎使用KiraBotDX，因为一些用户的行为，本bot绝大部分指令仅支持群聊使用，请在使用前阅读协议qwq");
-                KiraPlugin.SendFriendMessage(f.session, f.e.FromQQ, "下面是帮助文本，如果没有群能用的也欢迎加入bot的群1044241327");
-                KiraPlugin.SendFriendPic(f.session, f.e.FromQQ, $"{G.path.Apppath}{G.path.help}default.png");
-                KiraPlugin.SendFriendPic(f.session, f.e.FromQQ, $"{G.path.Apppath}{G.path.help}rule.png");
-                KiraPlugin.SendFriendPic(f.session, f.e.FromQQ, $"{G.path.Apppath}{G.path.help}attention.png");
+                
+                KiraDX.Bot.Mod_System.help.GetHelp(new FriendVars("",f.e.FromQQ,(long)f.session.QQNumber,f.session,null));
+               
             }
             else
             {
@@ -219,114 +226,139 @@ namespace KiraDX.Bot
 
         public static async void FriendMessage(string msg,  long fromAccount, long botid, Mirai_CSharp.MiraiHttpSession session, IFriendMessageEventArgs e)
         {
-            FriendVars g = new FriendVars(msg, fromAccount, botid, session,e);
-            if (BotFunc.IsBanned(fromAccount))
+            try
             {
-                return;
-            }
-            switch (msg)
-            {
-                case "帮助":
-                case "help":
-                case "/k help":
-                case "/help":
-                    KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "您好，欢迎使用KiraBotDX，因为一些用户的行为，本bot绝大部分指令仅支持群聊使用，请在使用前阅读协议qwq");
-                    KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "Bot的帮助是/k help");
-                    KiraPlugin.SendFriendMessage(g.s, g.fromAccount, "下面是帮助文本，如果没有群能用的也欢迎加入bot的群1044241327");
-                    KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}default.png");
-                    KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}rule.png");
-
-                    KiraPlugin.SendFriendPic(g.s, g.fromAccount, $"{G.path.Apppath}{G.path.help}attention.png");
-                    OnCommanded.onCommanded(g, "help");
-                    return;
-                default:
-                    break;
-            }
-            string[] dic = new[] { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info" };
-            foreach (var item in dic)
-            {
-                if (msg.StartsWith(item))
+                FriendVars g = new FriendVars(msg, fromAccount, botid, session, e);
+                if (BotFunc.IsBanned(fromAccount))
                 {
+                    return;
+                }
+                if (!Users.Info.GetUserConfig(g.fromAccount).IsPassed)
+                {
+                    KiraPlugin.sendMessage(g, @"因为Bot最近遭受的申必行为，因此现在开启了私聊白名单模式，请到这里去申请白名单（看完内容填完qq点申请秒过的），同时这里也有一些私聊使用的注意事项，复制到浏览器访问 http://blogs.mizunas.com/Bot/PasswordGet/");
+                    return;
+                }
+
+                switch (msg)
+                {
+                    case "帮助":
+                    case "help":
+                    case "/c help":
+                    case "/help":
+                        KiraDX.Bot.Mod_System.help.GetHelp(g);
+                        return;
+                    default:
+                        break;
+                }
+                if ((msg.Contains("/c help")))
+                {
+                    KiraDX.Bot.Mod_System.help.GetHelp(g);
+                }
+                string[] dic = new[] { "查分", "/as", "/a score", "/arc score", "/a info", "/arc info" };
+                foreach (var item in dic)
+                {
+                    if (msg.StartsWith(item))
+                    {
 
 
                         KiraDX.Bot.arcaea.arcaea.SongBest(g);
-                    OnCommanded.onCommanded(g, "arc");
-                    return;
+                        OnCommanded.onCommanded(g, "arc");
+                        return;
 
+                    }
                 }
-            }
-            dic = new[] { "查分", "/r", "/a", "/arc", "/最近", "/arς", "/αrc", @"/@rc", "/ARForest", "/ārc" };
-            foreach (var item in dic)
-            {
-                if (msg == item)
+                dic = new[] { "查分", "/r", "/a", "/arc", "/最近", "/arς", "/αrc", @"/@rc", "/ARForest", "/ārc" };
+                foreach (var item in dic)
                 {
+                    if (msg == item)
+                    {
 
-
+                        if (G.EventCfg.IsArcBoom)
+                        {
+                            KiraPlugin.sendMessage(g, "查询Arcaea信息失败，因为616日常改加密算法\n你知道吗：Lowiro是一个背叛玩家的坏游戏制作厂商");
+                            return;
+                        }
                         KiraDX.Bot.arcaea.arcaea.Arc(g);
-                    OnCommanded.onCommanded(g, "arc");
-                    return;
+                        OnCommanded.onCommanded(g, "arc");
+                        return;
 
+                    }
                 }
-            }
 
-            dic = new[] { "/b30", "/arc b30", "/a3", "/a b30", "b30", "查b30", "/arc b114514" };
-            foreach (var item in dic)
-            {
-                if (msg == item)
+                dic = new[] { "/b30", "/arc b30", "/a3", "/a b30", "b30", "查b30", "/arc b114514" };
+                foreach (var item in dic)
                 {
+                    if (msg == item)
+                    {
+                        if (G.EventCfg.IsArcBoom)
+                        {
+                            KiraPlugin.sendMessage(g, "查询Arcaea信息失败，因为616日常改加密算法\n你知道吗：Lowiro是一个背叛玩家的坏游戏制作厂商");
+                            return;
+                        }
                         KiraDX.Bot.arcaea.arcaea.b30(g);
-                    OnCommanded.onCommanded(g, "arc");
-                    return;
+                        OnCommanded.onCommanded(g, "arc");
+                        return;
+                    }
                 }
-            }
 
-            dic = new[] { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
-            foreach (var item in dic)
-            {
-                if (msg.StartsWith(item))
+                dic = new[] { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
+                foreach (var item in dic)
                 {
-
+                    if (msg.StartsWith(item))
+                    {
+                        if (G.EventCfg.IsArcBoom)
+                        {
+                            KiraPlugin.sendMessage(g, "查询Arcaea信息失败，因为616日常改加密算法\n你知道吗：Lowiro是一个背叛玩家的坏游戏制作厂商");
+                            return;
+                        }
                         KiraDX.Bot.arcaea.arcaea.Bind(g);
 
-                    OnCommanded.onCommanded(g, "arc");
-                    return;
-                   
-                }
-            }
-            dic = new[] { "/a rand", "/arc rand", "随机选曲", "抽歌" };
-            foreach (var item in dic)
-            {
-                if (msg.StartsWith(item))
-                {
-                        KiraDX.Bot.arcaea.arcaea.RandArc(g);
-                    OnCommanded.onCommanded(g, "arc");
-                    return;
-                 
-                }
-            }
+                        OnCommanded.onCommanded(g, "arc");
+                        return;
 
-            if (g.msg.format().StartsWith("/k todev ") || g.msg.format().StartsWith("/k todev-l "))
-            {
-                try
-                {
-                    string sts = "public";
-                    if (g.msg.format().StartsWith("/k todev-l "))
-                    {
-                        sts = "private";
                     }
-                    KiraPlugin.sendMessage(g, $"[{sts}]\n[私讯]\n[Account {g.fromAccount}]\n{g.msg.Split(" ", count: 3)[2]}", true, IsToFriend: true, ToFriend: 1848200159);
-                    KiraPlugin.sendMessage(g, "已传达");
-                    return;
                 }
-                catch (Exception ex)
+                dic = new[] { "/a rand", "/arc rand", "随机选曲", "抽歌" };
+                foreach (var item in dic)
                 {
+                    if (msg.StartsWith(item))
+                    {
+                        KiraDX.Bot.arcaea.arcaea.RandArc(g);
+                        OnCommanded.onCommanded(g, "arc");
+                        return;
 
-                    KiraPlugin.sendMessage(g, ex.Message);
-                    return;
+                    }
                 }
-            }
 
-            return;
+                if (g.msg.format().StartsWith("/c todev ") || g.msg.format().StartsWith("/c todev-l "))
+                {
+                    try
+                    {
+                        string sts = "public";
+                        if (g.msg.format().StartsWith("/c todev-l "))
+                        {
+                            sts = "private";
+                        }
+                        KiraPlugin.sendMessage(g, $"[{sts}]\n[私讯]\n[Account {g.fromAccount}]\n{g.msg.Split(" ", count: 3)[2]}", true, IsToFriend: true, ToFriend: 1930300830);
+                        KiraPlugin.sendMessage(g, "已传达");
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+
+                        KiraPlugin.sendMessage(g, ex.Message);
+                        return;
+                    }
+                }
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                KiraPlugin.SendFriendMessage(session, fromAccount, ex.ToString());
+                Console.WriteLine(ex.ToString());
+                return;
+            }
         }
     }
 }

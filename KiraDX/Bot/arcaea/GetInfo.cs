@@ -15,11 +15,16 @@ namespace KiraDX.Bot.arcaea
         public class b30info {
            public JObject UserInfo;
            public JObject B30;
+            public string e = "null";
 
             public b30info(JObject userInfo, JObject b30)
             {
                 UserInfo = userInfo;
                 B30 = b30;
+            }
+            public b30info(string i)
+            {
+                e = i;
             }
         }
         public class SongScore {
@@ -76,6 +81,7 @@ namespace KiraDX.Bot.arcaea
                 var recent = new HttpClient();
                 recent.DefaultRequestHeaders.Add("User-Agent", G.APIs.ARCAPI.UserAgent);
                 var R = Encoding.UTF8.GetString(recent.GetByteArrayAsync($"{G.APIs.ARCAPI.site}{G.APIs.ARCAPI.Recently}{usercode}").Result);
+                
                 return (JObject)JsonConvert.DeserializeObject(R);
             }
             catch (Exception)
@@ -91,19 +97,31 @@ namespace KiraDX.Bot.arcaea
             {
                 var b30 = new HttpClient();
                 b30.DefaultRequestHeaders.Add("User-Agent", G.APIs.ARCAPI.UserAgent);
+                b30.Timeout =System.TimeSpan.FromSeconds(60);
                 var uinfo = new HttpClient();
+                uinfo.Timeout = System.TimeSpan.FromSeconds(60);
                 uinfo.DefaultRequestHeaders.Add("User-Agent", G.APIs.ARCAPI.UserAgent);
                 var Info_b30 = Encoding.UTF8.GetString(b30.GetByteArrayAsync($"{G.APIs.ARCAPI.site}{G.APIs.ARCAPI.b30}{usercode}").Result);
                 var Info_user = Encoding.UTF8.GetString(uinfo.GetByteArrayAsync($"{G.APIs.ARCAPI.site}{G.APIs.ARCAPI.userInfo}{usercode}").Result);
+                if (G.EventCfg.debugMode)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(Info_b30+'\n'+Info_user);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
                 JObject json_b30 = (JObject)JsonConvert.DeserializeObject(Info_b30);
                 JObject json_user= (JObject)JsonConvert.DeserializeObject(Info_user);
-
+                
 
                 return new b30info(json_user,json_b30);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
+                if (e.GetType().FullName== "System.AggregateException")
+                {
+                    return new b30info("查询best30失败：请求超时\ntips:多次超时请可以试着等亿会后再来查");
+                }
+                return new b30info(e.Message+"\n"+e.ToString());
             }
         }  
     }

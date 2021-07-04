@@ -13,17 +13,17 @@ namespace KiraDX.Bot
             {
                 gl += $"{item.Id};";
             }
-            if (g.botid==G.BotList.Soffy)
+            if (g.botid==G.BotList.Alice)
             {
                 Users.BotInfo.Groups[0] = gl;
                 return;
             }
-            else if (g.botid == G.BotList.Laffy)
+            else if (g.botid == G.BotList.Nadia)
             {
                 Users.BotInfo.Groups[1] = gl;
                 return;
             }
-            else if (g.botid == G.BotList.Miffy)
+            else if (g.botid == G.BotList.Calista)
             {
                 Users.BotInfo.Groups[2] = gl;
                 return;

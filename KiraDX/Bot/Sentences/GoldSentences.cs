@@ -20,7 +20,7 @@ namespace KiraDX.Bot.Sentences
                 {
                     return;
                 }
-                KiraPlugin.SendGroupMessage(vs.s, vs.fromGroup, "本群迫害模块处于关闭状态，请使用/k mod enable 迫害 打开本群迫害模块后再获取金句");
+                KiraPlugin.SendGroupMessage(vs.s, vs.fromGroup, "本群迫害模块处于关闭状态，请使用/c mod enable 迫害 打开本群迫害模块后再获取金句");
             }
         }
         public static void GetSent(GroupMsg g,string type) {
@@ -39,7 +39,7 @@ namespace KiraDX.Bot.Sentences
                 {
                     return;
                 }
-                KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "本群迫害模块处于关闭状态，请使用/k mod enable 迫害 打开本群迫害模块后再获取金句");
+                KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "本群迫害模块处于关闭状态，请使用/c mod enable 迫害 打开本群迫害模块后再获取金句");
             }
 
         }

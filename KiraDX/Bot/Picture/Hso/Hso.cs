@@ -23,22 +23,7 @@ namespace KiraDX.Bot.Picture.Hso
             }
             
         }
-        public static void GetHso(DisMsg vs, string type)
-        {
-
-            try
-            {
-                string hsoPath = Functions.Random_File(Functions.Random_Folders(G.path.Apppath + G.path.Pic + type));
-                
-                KiraPlugin.SendPicAsync(hsoPath, vs);
-            }
-            catch (Exception e)
-            {
-                KiraPlugin.SendMsg(e.Message, vs);
-               
-            }
-
-        }
+       
 
         public static void YouFa(GroupMsg vs,string type)
         {

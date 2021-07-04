@@ -12,7 +12,7 @@ namespace KiraDX.Bot.Others
     class Trans
     {
         public static void Translate(GroupMsg g) {
-            // /k trans jp
+            // /c trans jp
             try
             {
                 string msg = g.msg;

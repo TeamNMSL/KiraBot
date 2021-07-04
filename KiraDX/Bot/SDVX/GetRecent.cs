@@ -42,6 +42,22 @@ namespace KiraDX.Bot.SDVX
             }
             return "?";
         }
+        static public string GetRating(string json, string id)
+        {
+            JObject jo = (JObject)JsonConvert.DeserializeObject(json);
+            JObject music = (JObject)jo["_related"];
+            foreach (var item in music["charts"])
+            {
+                if (item["_id"].ToString() == id)
+                {
+                    
+                        return item["rating"].ToString();
+                    
+
+                }
+            }
+            return "?";
+        }
         static public string TimeRecord(string json)
         {
             JArray array = JArray.Parse(((JObject)JsonConvert.DeserializeObject(json))["_items"].ToString());
@@ -108,8 +124,9 @@ namespace KiraDX.Bot.SDVX
                 {
                     Recent = (JObject)item;
                     string Diff = GetChartDiff(json, item["chart_id"].ToString());
-                    string rpl = $"UserName:{jo["_related"]["profiles"][0]["name"]}\nUserCode:{jo["_related"]["profiles"][0]["_id"]}\nSong:{songname}[{Diff}]\nScore:{Recent["score"].ToString()}({Recent["grade"].ToString()})\nLamp:{Recent["lamp"].ToString()}\nCritical:{Recent["critical"].ToString()}\nNear:{Recent["near"].ToString()}\nError:{Recent["error"].ToString()}\nMaxChain:{Recent["max_chain"].ToString()}";
-                    KiraPlugin.sendMessage(g, rpl);
+                    //string rpl = $"UserName:{jo["_related"]["profiles"][0]["name"]}\nUserCode:{jo["_related"]["profiles"][0]["_id"]}\nSong:{songname}[{Diff}]\nScore:{Recent["score"].ToString()}({Recent["grade"].ToString()})\nLamp:{Recent["lamp"].ToString()}\nCritical:{Recent["critical"].ToString()}\nNear:{Recent["near"].ToString()}\nError:{Recent["error"].ToString()}\nMaxChain:{Recent["max_chain"].ToString()}";
+                    Pic.SVPic(g, jo["_related"]["profiles"][0]["name"].ToString(), songname, Recent["score"].ToString(), GetChartDiff(json, item["chart_id"].ToString(), true), jo["_related"]["profiles"][0]["_id"].ToString(), "", Recent["critical"].ToString(), "", Recent["near"].ToString(), Recent["error"].ToString(), Recent["max_chain"].ToString(), "", "", GetRating(json, item["chart_id"].ToString()));
+                    //KiraPlugin.sendMessage(g, rpl);
                     return;
                 }
 
@@ -122,8 +139,9 @@ namespace KiraDX.Bot.SDVX
                 {
                     Recent = (JObject)item;
                     string Diff = GetChartDiff(json, item["chart_id"].ToString());
-                    string rpl = $"UserName:{jo["_related"]["profiles"][0]["name"]}\nUserCode:{jo["_related"]["profiles"][0]["_id"]}\nSong:{songname}[{Diff}]\nScore:{Recent["score"].ToString()}({Recent["grade"].ToString()})\nLamp:{Recent["lamp"].ToString()}\nCritical:{Recent["critical"].ToString()}\nNear:{Recent["near"].ToString()}\nError:{Recent["error"].ToString()}\nMaxChain:{Recent["max_chain"].ToString()}";
-                    KiraPlugin.sendMessage(g, rpl);
+                    //string rpl = $"UserName:{jo["_related"]["profiles"][0]["name"]}\nUserCode:{jo["_related"]["profiles"][0]["_id"]}\nSong:{songname}[{Diff}]\nScore:{Recent["score"].ToString()}({Recent["grade"].ToString()})\nLamp:{Recent["lamp"].ToString()}\nCritical:{Recent["critical"].ToString()}\nNear:{Recent["near"].ToString()}\nError:{Recent["error"].ToString()}\nMaxChain:{Recent["max_chain"].ToString()}";
+                    Pic.SVPic(g, jo["_related"]["profiles"][0]["name"].ToString(), songname, Recent["score"].ToString(), GetChartDiff(json, item["chart_id"].ToString(),true), jo["_related"]["profiles"][0]["_id"].ToString(), "", Recent["critical"].ToString(), "", Recent["near"].ToString(), Recent["error"].ToString(), Recent["max_chain"].ToString(), "", "", GetRating(json, item["chart_id"].ToString()));
+                    //KiraPlugin.sendMessage(g, rpl);
                     return;
                 }
 
@@ -144,8 +162,9 @@ namespace KiraDX.Bot.SDVX
             JObject Recent = (JObject)Scores["_items"][0];
             string songname = GetSongName(json, Recent["music_id"].ToString());
             string Diff = GetChartDiff(json, Recent["chart_id"].ToString());
-            string rpl = $"UserName:{jo["_related"]["profiles"][0]["name"]}\nUserCode:{jo["_related"]["profiles"][0]["_id"]}\nSong:{songname}[{Diff}]\nScore:{Recent["score"].ToString()}({Recent["grade"].ToString()})\nLamp:{Recent["lamp"].ToString()}\nCritical:{Recent["critical"].ToString()}\nNear:{Recent["near"].ToString()}\nError:{Recent["error"].ToString()}\nMaxChain:{Recent["max_chain"].ToString()}";
-            KiraPlugin.sendMessage(g, rpl);
+            Pic.SVPic(g, jo["_related"]["profiles"][0]["name"].ToString(), songname, Recent["score"].ToString(), GetChartDiff(json, Recent["chart_id"].ToString(), true), jo["_related"]["profiles"][0]["_id"].ToString(), "", Recent["critical"].ToString(), "", Recent["near"].ToString(), Recent["error"].ToString(), Recent["max_chain"].ToString(), "", "", GetRating(json, Recent["chart_id"].ToString()));
+           // string rpl = $"UserName:{jo["_related"]["profiles"][0]["name"]}\nUserCode:{jo["_related"]["profiles"][0]["_id"]}\nSong:{songname}[{Diff}]\nScore:{Recent["score"].ToString()}({Recent["grade"].ToString()})\nLamp:{Recent["lamp"].ToString()}\nCritical:{Recent["critical"].ToString()}\nNear:{Recent["near"].ToString()}\nError:{Recent["error"].ToString()}\nMaxChain:{Recent["max_chain"].ToString()}";
+            //KiraPlugin.sendMessage(g, rpl);
          }
     }
 }

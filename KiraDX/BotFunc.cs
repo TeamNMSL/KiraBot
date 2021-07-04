@@ -22,6 +22,26 @@ namespace KiraDX
             }
         
         }
+        /// <summary>
+        /// 返回群是否为白名单群
+        /// </summary>
+        /// <param name="id">群号</param>
+        /// <returns>true则是</returns>
+
+        public static bool IsWhiteGroup(string id) {
+            if (!Users.WhiteGroupList.ContainsKey(id))
+            {
+                SQLiteDB sb=new SQLiteDB(G.path.WhiteGroupList);
+                sb.setcmd($"SELECT * from GroupList where GroupID ='"+id+"'");
+                if (sb.execute().Rows.Count == 0)
+                {
+                    return false;
+                }
+                Users.WhiteGroupList.Add(id, 0);
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// 获取这个bot是否需要在这个群回复，在if内用
@@ -47,7 +67,7 @@ namespace KiraDX
         public static bool IsMainBot(GroupMsg g) {
             try
             {
-                if (g.botid == G.BotList.Miffy)
+                if (g.botid == G.BotList.Calista)
                 {
                     return false;
                 }
@@ -70,13 +90,13 @@ namespace KiraDX
                 if (Users.Info.GetGroupConfig(g.fromGroup).mainbot=="none")
                 {
                     string str = "";
-                    if (g.botid == G.BotList.Laffy)
+                    if (g.botid == G.BotList.Nadia)
                     {
-                        str = "Laffy";
+                        str = "Nadia";
                     }
-                    else if (g.botid == G.BotList.Soffy)
+                    else if (g.botid == G.BotList.Alice)
                     {
-                        str = "Soffy";
+                        str = "Alice";
                     }
                     else
                     {
@@ -88,13 +108,13 @@ namespace KiraDX
                 long bid = 0;
                 string Mainbot =Users.Info.GetGroupConfig(g.fromGroup).mainbot;
                 //Console.WriteLine(Mainbot);
-                if (Mainbot.Contains("Soffy") || Mainbot.Contains("YUI"))
+                if (Mainbot.Contains("Alice") || Mainbot.Contains("YUI")||Mainbot.Contains("Soffy"))
                 {
-                    bid = G.BotList.Soffy;
+                    bid = G.BotList.Alice;
                 }
-                else if (Mainbot.Contains("Laffy") || Mainbot.Contains("AOI"))
+                else if (Mainbot.Contains("Nadia") || Mainbot.Contains("AOI")||Mainbot.Contains("Laffy"))
                 {
-                    bid = G.BotList.Laffy;
+                    bid = G.BotList.Nadia;
                 }
                 else
                 {

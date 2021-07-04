@@ -21,6 +21,10 @@ namespace KiraDX.Bot.arcaea
                 //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
                 b30info Info = GetArcBest30(friendcode);
+                if (Info.e != "null")
+                {
+                    KiraPlugin.sendMessage(g, Info.e);
+                }
                 ArcB30(Info,g);
 
             }
@@ -32,32 +36,6 @@ namespace KiraDX.Bot.arcaea
             }
         
         
-        }
-        public static void b30(DisMsg g)
-        {
-            try
-            {
-                string msg = g.msg;
-                if (Users.Info.GetUserConfig(g.fromAccount).ArcID == "-1")
-                {
-                    KiraPlugin.SendMsg("Please bind your arcaea account before check your score", g);
-                    return;
-                }
-
-                //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
-                string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
-                b30info Info = GetArcBest30(friendcode);
-                ArcB30(Info, g);
-
-            }
-
-            catch (Exception e)
-            {
-                KiraPlugin.SendMsg(e.Message, g);
-                throw;
-            }
-
-
         }
         public static void b30(FriendVars g)
         {
@@ -73,17 +51,22 @@ namespace KiraDX.Bot.arcaea
                 //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
                 b30info Info = GetArcBest30(friendcode);
+                if (Info.e!="null")
+                {
+                    KiraPlugin.sendMessage(g, Info.e);
+                }
                 ArcB30(Info, g);
 
             }
 
             catch (Exception e)
             {
-                KiraPlugin.SendFriendMessage(g.s, g.fromAccount, e.Message);
-                throw;
+                KiraPlugin.SendGroupMessage(g.s, g.fromAccount, e.Message);
+                return;
             }
 
 
         }
+
     }
 }

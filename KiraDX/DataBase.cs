@@ -8,7 +8,7 @@ using System.Data.Common;
 
 namespace KiraDX
 {
-    class SQLiteDB {
+    public class SQLiteDB {
         SQLiteConnection con;
         public void Open() {
             con = new SQLiteConnection("Data Source=" + path + "");
@@ -33,9 +33,8 @@ namespace KiraDX
         }
         public void addParameters(string ParaName,string value)
         {
-            SQLiteParameter para = new SQLiteParameter(); //声明参数
-            para = new SQLiteParameter($"@{ParaName}", value);//生成一个名字为@Id的参数,必须以@开头表示是添加的参数，并设置其类型长度，类型长度与数据库中对应字段相同，但是不能超出数据库字段大小的范围，否则报错。
-            //para.Value = value;
+            SQLiteParameter para = new SQLiteParameter(); 
+            para = new SQLiteParameter($"@{ParaName}", value);
             com.Parameters.Add(para);
         }
         public DataTable execute() {
@@ -57,6 +56,9 @@ namespace KiraDX
 
         }
     }
+
+
+
     static class  DB{
 
        public  static DataTable execute(string path,string cmd) {

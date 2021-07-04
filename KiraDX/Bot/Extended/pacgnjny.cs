@@ -11,7 +11,7 @@ namespace KiraDX.Bot.Extended
         public static void pacgn(GroupMsg g) {
             try
             {
-                if (g.msg.ToLower()=="/k pa")
+                if (g.msg.ToLower()=="/c pa")
                 {
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "你指令有问题，但是我也不知道出了啥问题就算我知道出了啥问题我也不知道该如何解决这个问题因为我也不知道这个功能是干啥的（悲）");
                     return;

@@ -28,8 +28,7 @@ namespace KiraDX.Frame
     {
         public static void onCommanded(KiraDX.Bot.GroupMsg g,string type)
             => exe(new KiraDX.Bot.CmdedVars("QQ_Group",type,g.msg,g.fromAccount,g.fromGroup));
-        public static void onCommanded(KiraDX.Bot.DisMsg g, string type)
-            => exe(new Bot.CmdedVars("Discord_Server",type,g.msg,g.fromAccount,g.fromGroup));
+        
         public static void onCommanded(KiraDX.Bot.FriendVars g, string type)
             => exe(new Bot.CmdedVars("QQ_Private",type, g.msg, g.fromAccount));
 

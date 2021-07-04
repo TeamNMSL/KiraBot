@@ -30,12 +30,12 @@ namespace KiraDX.Bot.bottle
                         return;
                     }
                     bool HideGroup = true;
-                    if (g.msg.StartsWith("/k throw-u "))
+                    if (g.msg.StartsWith("/c throw-u "))
                     {
                         HideGroup = false;
                     }
-                    g.msg = g.msg.Replace("/k throw-u ", "");
-                    g.msg = g.msg.Replace("/k throw ", "");
+                    g.msg = g.msg.Replace("/c throw-u ", "");
+                    g.msg = g.msg.Replace("/c throw ", "");
                     if (g.msg == "")
                     {
                         KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "不要丢空瓶子啊kora");
@@ -91,7 +91,7 @@ namespace KiraDX.Bot.bottle
                     {
                         return;
                     }
-                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/k mod enable 漂流瓶 再使用漂流瓶功能");
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/c mod enable 漂流瓶 再使用漂流瓶功能");
 
                 }
             }
@@ -134,7 +134,7 @@ namespace KiraDX.Bot.bottle
                     {
                         return;
                     }
-                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/k mod enable 漂流瓶 再使用漂流瓶功能");
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/c mod enable 漂流瓶 再使用漂流瓶功能");
 
                 }
             }
@@ -180,7 +180,7 @@ namespace KiraDX.Bot.bottle
                     {
                         return;
                     }
-                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/k mod enable 漂流瓶 再使用漂流瓶功能");
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "该群漂流瓶模块暂未打开，请使用/c mod enable 漂流瓶 再使用漂流瓶功能");
 
                 }
             }

@@ -5,108 +5,24 @@ using System.IO;
 using KiraDX.Bot;
 using System.Collections;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Xml;
 
 namespace KiraDX
 {
     public class Users
     {
-        /*
-                public class GroupConfig {
-
-                   public  GroupConfig(string fromGroup, string botid)
-                    {
-                        GroupInlt(fromGroup,botid);
-
-                    }
-
-                  public  static  void GroupInlt(string fromGroup,string botid) {
-
-                        if (botid==G.BotList.Miffy.ToString())
-                        {
-                            return;
-                        }
-
-                        if (Directory.Exists($"{G.path.Apppath}{G.path.GroupData}") == false)
-                        {
-                            Directory.CreateDirectory($"{G.path.Apppath}{G.path.GroupData}");
-                        }
-                        if (!System.IO.File.Exists($"{G.path.Apppath}{G.path.GroupData}{fromGroup}.dx"))
-                        {
-                            string cfg = $"{botid}\n";
-                            File.WriteAllText($"{G.path.Apppath}{G.path.GroupData}{fromGroup}.dx",cfg);
-                        }
-                        string[] cfgs = File.ReadAllLines($"{G.path.Apppath}{G.path.GroupData}{fromGroup}.dx");
-                        try
-                        {
-                            Mainbot = int.Parse(cfgs[0]).ToString();
-                            GroupId = fromGroup.ToString();
-                            if (Users.White.WhiteGroup.Contains(GroupId))
-                            {
-                                Configs.Info.IsWhite = true;
-                            }
-                            else
-                            {
-                                Configs.Info.IsWhite = false;
-                            }
-                            if (cfgs.ToString().Contains("bot"))
-                            {
-                                Configs.Switches.BotSwitch = false;
-                            }
-                        }
-                        catch (Exception)
-                        {
-
-                            return;
-                        }
-
-                    }
-                    public static string Mainbot="";//响应的bot
-                    public  static string GroupId = "";//群号
-                    public  class Configs {
-                        public  class Info {
-                            public static bool IsWhite;//是否在白名单
-                        }
-                        public  class Switches {
-                            public static bool BotSwitch=true;//Bot总开关
-                        }
-
-                    }
-                }
-                public static List<GroupConfig> GroupList=new List<GroupConfig>();
-                public static void GroupLoad()
-                {
-                    //var distinctItems = items.GroupBy(x => x.Id).Select(y => y.First());
-                    string dirPath = $"{G.path.Apppath}{G.path.GroupData}";
-                    try
-                    {
-                        List<GroupConfig> temp = new List<GroupConfig>();
-                        temp.Clear();
-                        //ArrayList list = new ArrayList();
-                        List<string> dirs = new List<string>(Directory.GetDirectories(dirPath, "*", System.IO.SearchOption.AllDirectories));
-                        foreach (var dir in dirs)
-                        {
-                            temp.Add(new GroupConfig(dir.Replace(".dx", "").Replace($"{dirPath}", ""), G.BotList.Soffy.ToString()));
-                            //Console.WriteLine("{0}", dir);
-                            //list.Add(dir.Replace(".dx","").Replace($"{dirPath}",""));
-                            /* if (GroupList.All(b => temp.Any(a => a.equal(b))))
-                             {
-                                 GroupList.Add(new GroupConfig(dir.Replace(".dx", "").Replace($"{dirPath}", ""), G.BotList.Soffy.ToString()));
-                             }
-                        }
-
-                        return;
-                    }
-                    catch (Exception e)
-                    {
-                        return;
-                    }
-                }
-               */
-
+       
+        public static Dictionary<string, int> VegetableList = new Dictionary<string, int>() {
+            {"029143294",573 },
+            {"000000000",616 }
+        
+        };
         public static class BotSession {
-           public  static Mirai_CSharp.MiraiHttpSession Laffy=null;
-           public  static Mirai_CSharp.MiraiHttpSession Soffy = null;
-           public  static Mirai_CSharp.MiraiHttpSession Miffy = null;
+           public  static Mirai_CSharp.MiraiHttpSession Nadia=null;
+           public  static Mirai_CSharp.MiraiHttpSession Alice = null;
+           public  static Mirai_CSharp.MiraiHttpSession Calista = null;
         }
         public static class BotInfo {
             public static string[] Groups = { "", "", "" };
@@ -152,17 +68,48 @@ namespace KiraDX
             }
         }
         public static class cfgs {
+            
             public static string FunctionList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira");
             public static string NonStudy= File.ReadAllText($"{G.path.Apppath}NonStudy.Kira");
             public static string Channel = File.ReadAllText($"{G.path.Apppath}ChannelList.Kira");
             public static string SystemFunc = File.ReadAllText($"{G.path.Apppath}SystemFunc.kira");
+            //public static JObject SDVXMDB=GetMDB();
+            public static Dictionary<string,int> SDVXMDB=new Dictionary<string, int>();
+            private static int init1 = GetMDB();
             public static void reload() {
                 
                 FunctionList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira");
                 NonStudy = File.ReadAllText($"{G.path.Apppath}NonStudy.Kira");
                 Channel = File.ReadAllText($"{G.path.Apppath}ChannelList.Kira");
                 SystemFunc= File.ReadAllText($"{G.path.Apppath}SystemFunc.kira");
+                SDVXMDB = new Dictionary<string, int>();
+                GetMDB();
                 Console.WriteLine("配置列表重载完毕");
+            }
+            private static int GetMDB() {
+                System.Threading.Tasks.Task.Run(async()=> {
+                    Console.WriteLine("SoundVoltex MDB loading");
+                    string xml2json(string xml)
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.LoadXml(xml);
+                        return JsonConvert.SerializeXmlNode(doc);
+                    }
+                    Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                    Encoding shiftjis = Encoding.GetEncoding(932);
+                    string t = File.ReadAllText($"{G.path.Apppath }music_db.xml", shiftjis);
+                    t = xml2json(t);
+                    JObject slst = (JObject)JsonConvert.DeserializeObject(t);
+                    foreach (var s in slst["mdb"]["music"])
+                    {
+                        SDVXMDB.Add(s["info"]["title_name"].ToString(), int.Parse(s["@id"].ToString()));
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("SoundVoltex MDB load success");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                });
+                return 0;
             }
         }
         public  static void Reload()
@@ -174,7 +121,8 @@ namespace KiraDX
             Info.Reload();
             
         }
-        public static class Info {
+        public static class Info
+        {
             public static Dictionary<long, ConfigUser> UserInfo = new Dictionary<long, ConfigUser>() { };
             public static Dictionary<long, ConfigGroup> GroupInfo = new Dictionary<long, ConfigGroup>() { };
             public static ConfigGroup GetGroupConfig(long id)
@@ -193,7 +141,8 @@ namespace KiraDX
                 }
 
             }
-            public static ConfigUser GetUserConfig(long id) {
+            public static ConfigUser GetUserConfig(long id)
+            {
                 try
                 {
                     if (!UserInfo.ContainsKey(id))
@@ -206,9 +155,10 @@ namespace KiraDX
                 {
                     return null;
                 }
-               
+
             }
-            public static void Reload() {
+            public static void Reload()
+            {
                 /*  foreach (var item in UserInfo)
                   {
                       UserInfo[item.Key] = new ConfigUser(item.Key);
@@ -222,6 +172,7 @@ namespace KiraDX
                 Console.WriteLine("用户数据重载完毕");
             }
         }
-     public static long botMsgNum=0;
+        public static long botMsgNum=0;
+        public static Dictionary<string, int> WhiteGroupList = new Dictionary<string, int>(); 
     }
 }

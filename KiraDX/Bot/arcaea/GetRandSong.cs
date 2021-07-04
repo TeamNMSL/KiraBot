@@ -63,64 +63,7 @@ using System.Text;
 
             }
         }
-        public static void RandArc(DisMsg g)
-        {
-            try
-            {
-                bool IsExt = true;
-                int rt = 1;
-                string t = "0";
-                string rpl = "";
-                if (g.msg.Contains("取") && g.msg.Contains("次"))
-                {
-                    t = Functions.TextGainCenter("取", "次", g.msg);
-                    rt = int.Parse(t);
-                    g.msg = g.msg.Replace("取" + t + "次", "");
-                }
-                string[] apd = { "倒立收割", "HardClear", "单手收割", "念力游玩" };
-                string ext;
-                int diff = 0;
-                if (g.msg.Contains("+"))
-                {
-                    diff = 1;
-                }
-                if (g.msg.Contains("-"))
-                {
-                    if (g.msg.Contains("-j"))
-                    {
-                        IsExt = false;
-                    }
-                    else
-                    {
-                        KiraPlugin.SendMsg("No such song", g);
-
-                        return;
-                    }
-
-                }
-                diff += Functions.GetNumberInString(g.msg) * 2;
-
-                for (int i = 0; i < rt; i++)
-                {
-                    if (IsExt)
-                    {
-                        ext = apd[Functions.GetRandomNumber(0, apd.Length - 1)];
-                        rpl += RandSong($"{ext},请\n", diff);
-                    }
-                    else
-                    {
-                        rpl += RandSong(diff) + "\n";
-                    }
-
-                }
-                KiraPlugin.SendMsg(rpl, g);
-            }
-            catch (Exception e)
-            {
-
-                KiraPlugin.SendMsg(e.Message,g);
-            }
-        }
+       
         public static void RandArc(FriendVars g)
         {
             try

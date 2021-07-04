@@ -26,12 +26,12 @@ namespace KiraDX.Bot.Picture.Pic
 
                 if (!BotFunc.FuncSwith(vs, "图片"))
                 {
-                    KiraPlugin.SendGroupMessage(vs.s, vs.fromGroup, $"該群的图片模塊暫未打開，如有需要，請使用/k mod enable 图片 來打開");
+                    KiraPlugin.SendGroupMessage(vs.s, vs.fromGroup, $"該群的图片模塊暫未打開，如有需要，請使用/c mod enable 图片 來打開");
                     return;
                 }
                 if (!BotFunc.FuncSwith(vs,type) )
                 {
-                    KiraPlugin.SendGroupMessage(vs.s, vs.fromGroup, $"該群的{type}模塊暫未打開，如有需要，請使用/k mod enable {type} 來打開");
+                    KiraPlugin.SendGroupMessage(vs.s, vs.fromGroup, $"該群的{type}模塊暫未打開，如有需要，請使用/c mod enable {type} 來打開");
                     return;
                 }
                 Path = Functions.Random_File(G.path.Apppath + G.path.Pic + type);

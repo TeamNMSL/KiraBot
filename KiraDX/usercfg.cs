@@ -14,6 +14,7 @@ namespace KiraDX
         public bool IsStudy;
         public bool IsWhite;
         public bool IsAdmin;
+        public bool IsPassed;
         public ConfigUser(long Id)
         {
             this.ID = Id;
@@ -66,6 +67,17 @@ namespace KiraDX
             {
                 IsAdmin = false;
             }
+            var sb = new SQLiteDB(G.path.DB_KiraPass);
+            sb.addParameters("id", ID.ToString());
+            sb.setcmd("SELECT * FROM PassList where id=@id");
+            if (sb.execute().Rows.Count<=0)
+            {
+                IsPassed = false;
+            }
+            else
+            {
+                IsPassed = true;
+            }
         }
     }
 
@@ -88,13 +100,13 @@ namespace KiraDX
 
                     string Mainbot = File.ReadAllText($"{G.path.Apppath}{G.path.MainBotData}{Id}.kira");
                     //Console.WriteLine(Mainbot);
-                    if (Mainbot.Contains("Soffy") || Mainbot.Contains("YUI"))
+                    if (Mainbot.Contains("Alice") || Mainbot.Contains("YUI")||Mainbot.Contains("Soffy"))
                     {
-                        mainbot = "Soffy";
+                        mainbot = "Alice";
                     }
-                    else if (Mainbot.Contains("Laffy") || Mainbot.Contains("AOI"))
+                    else if (Mainbot.Contains("Nadia") || Mainbot.Contains("AOI")||Mainbot.Contains("Laffy"))
                     {
-                        mainbot = "Laffy";
+                        mainbot = "Nadia";
                     }
                     else
                     {

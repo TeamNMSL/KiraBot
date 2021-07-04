@@ -16,7 +16,7 @@ namespace KiraDX.Bot
                 var r = new HttpClient();
                 var R = Encoding.UTF8.GetString(r.GetByteArrayAsync("https://api.bandoristation.com/?function=query_room_number").Result);
                 return (JObject)JsonConvert.DeserializeObject(R);
-                //return (JObject)JsonConvert.DeserializeObject("{\"status\":\"success\",\"response\":[{\"number\":\"996725\",\"raw_message\":\"996725 q 3\",\"source_info\":{\"name\":\"Tsugu\",\"type\":\"qq\"},\"type\":\"other\",\"time\":1614164079643,\"user_info\":{\"type\":\"qq\",\"user_id\":1848200159,\"username\":\"QQ\\u7528\\u6237184 * ***159\",\"avatar\":\"\"}}]}");
+                //return (JObject)JsonConvert.DeserializeObject("{\"status\":\"success\",\"response\":[{\"number\":\"996725\",\"raw_message\":\"996725 q 3\",\"source_info\":{\"name\":\"Tsugu\",\"type\":\"qq\"},\"type\":\"other\",\"time\":1614164079643,\"user_info\":{\"type\":\"qq\",\"user_id\":1930300830,\"username\":\"QQ\\u7528\\u6237184 * ***159\",\"avatar\":\"\"}}]}");
             }
             catch (Exception)
             {
@@ -24,7 +24,7 @@ namespace KiraDX.Bot
                 return null;
             }
         }
-        /*{"status":"success","response":[{"number":"996725","raw_message":"996725 q 3","source_info":{"name":"Tsugu","type":"qq"},"type":"other","time":1614164079643,"user_info":{"type":"qq","user_id":1848200159,"username":"QQ\u7528\u6237184****159","avatar":""}}]}
+        /*{"status":"success","response":[{"number":"996725","raw_message":"996725 q 3","source_info":{"name":"Tsugu","type":"qq"},"type":"other","time":1614164079643,"user_info":{"type":"qq","user_id":1930300830,"username":"QQ\u7528\u6237184****159","avatar":""}}]}
 */
         public static void IsCar(GroupMsg g)
         {

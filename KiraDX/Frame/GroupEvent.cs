@@ -21,8 +21,19 @@ namespace KiraDX
             }
             return ts;
         }
-        
-        
+
+        public static async System.Threading.Tasks.Task<List<IGroupMemberInfo>> GetMemberListAsync(MiraiHttpSession s,long id)
+        {
+            IGroupMemberInfo[] info =await s.GetGroupMemberListAsync(id);
+            
+            List<IGroupMemberInfo> ts = new List<IGroupMemberInfo>();
+            foreach (var item in info)
+            {
+                ts.Add(item);
+            }
+            return ts;
+        }
+
         public class GroupInviteVar
         {
             public MiraiHttpSession session;
@@ -85,8 +96,11 @@ namespace KiraDX
                         msg += item.ToString();
                     }
                 }
-                
-               Console.WriteLine($"Bot{session.QQNumber.ToString()}收到群{e.Sender.Group.Name}({e.Sender.Group.Id.ToString()})成员{e.Sender.Name}({e.Sender.Id.ToString()})的消息:{msg}");
+                if (G.EventCfg.showMessage)
+                {
+                    Console.WriteLine($"Bot{session.QQNumber.ToString()}收到群{e.Sender.Group.Name}({e.Sender.Group.Id.ToString()})成员{e.Sender.Name}({e.Sender.Id.ToString()})的消息:{msg}");
+                } 
+               
                Bot.Bot.GroupMessage(msg, e.Sender.Group.Id,e.Sender.Id, (long)session.QQNumber,session,e);
             }
             catch (Exception)
@@ -156,7 +170,7 @@ namespace KiraDX
                 }
                 else
                 {
-                    if (G.EventCfg.fool && Functions.GetRandomNumber(0, 2) != 1)
+                    if (G.EventCfg.fool && Functions.GetRandomNumber(0, 2) == 1)
                     {
                         msg = msg.rvs();
                     }

@@ -21,6 +21,17 @@ namespace KiraDX
                 this.e = e;
             }
         }
+        public static async System.Threading.Tasks.Task<List<IFriendInfo>> GetFriendListAsync(MiraiHttpSession s)
+        {
+            IFriendInfo[] info = await s.GetFriendListAsync();
+
+            List<IFriendInfo> ts = new List<IFriendInfo>();
+            foreach (var item in info)
+            {
+                ts.Add(item);
+            }
+            return ts;
+        }
         public static void Event_FriendMessage(Object oj) {
             try
             {
@@ -41,8 +52,11 @@ namespace KiraDX
                         msg += item.ToString();
                     }
                 }
-                
-               Console.WriteLine($"Bot{session.QQNumber.ToString()}收到好友{e.Sender.Name}({e.Sender.Id.ToString()})的消息:{msg}");
+                if (G.EventCfg.showMessage)
+                {
+                    Console.WriteLine($"Bot{session.QQNumber.ToString()}收到好友{e.Sender.Name}({e.Sender.Id.ToString()})的消息:{msg}");
+                }
+              
                Bot.Bot.FriendMessage(msg,e.Sender.Id, (long)session.QQNumber,session,e);
             }
             catch (Exception)

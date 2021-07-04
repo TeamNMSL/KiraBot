@@ -12,7 +12,7 @@ namespace KiraDX.Bot.Others
     class Writer
     {
         public static void GetNovel(GroupMsg g) {
-            // /k write xxxxxx
+            // /c write xxxxxx
             string[] cmds = g.msg.Split(" ", count: 3);
             switch (cmds[2].ToLower())
             {

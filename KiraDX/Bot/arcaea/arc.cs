@@ -29,7 +29,10 @@ namespace KiraDX.Bot.arcaea
                 //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
                 string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
                 JObject Info = GetRecent(friendcode);
-                
+                if (G.EventCfg.debugMode)
+                {
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, Info.ToString());
+                }
                 if (Info["status"].ToString() != "0")
                 {
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, "出现了我不知道是什么已知问题的已知问题");
@@ -38,17 +41,17 @@ namespace KiraDX.Bot.arcaea
                
                     
                     string username = Info["content"]["name"].ToString();
-                    string songid = Info["content"]["recent_score"]["song_id"].ToString();
-                    string score = Info["content"]["recent_score"]["score"].ToString();
-                    string diff = Info["content"]["recent_score"]["difficulty"].ToString();
+                    string songid = Info["content"]["recent_score"][0]["song_id"].ToString();
+                    string score = Info["content"]["recent_score"][0]["score"].ToString();
+                    string diff = Info["content"]["recent_score"][0]["difficulty"].ToString();
                     string ptt= Info["content"]["rating"].ToString();
-                    string pure= Info["content"]["recent_score"]["perfect_count"].ToString();
-                    string Bigpure = Info["content"]["recent_score"]["shiny_perfect_count"].ToString();
-                    string far= Info["content"]["recent_score"]["near_count"].ToString();
-                    string lost= Info["content"]["recent_score"]["miss_count"].ToString();
-                    string sptt= Info["content"]["recent_score"]["rating"].ToString();
-                    string cleartype = Info["content"]["recent_score"]["clear_type"].ToString();
-                    string playtime= Info["content"]["recent_score"]["time_played"].ToString();
+                    string pure= Info["content"]["recent_score"][0]["perfect_count"].ToString();
+                    string Bigpure = Info["content"]["recent_score"][0]["shiny_perfect_count"].ToString();
+                    string far= Info["content"]["recent_score"][0]["near_count"].ToString();
+                    string lost= Info["content"]["recent_score"][0]["miss_count"].ToString();
+                    string sptt= Info["content"]["recent_score"][0]["rating"].ToString();
+                    string cleartype = Info["content"]["recent_score"][0]["clear_type"].ToString();
+                    string playtime= Info["content"]["recent_score"][0]["time_played"].ToString();
                     ArcPic(g,username,songid, score,diff,friendcode,ptt,pure,Bigpure,far,lost,sptt,playtime,cleartype);
                 
                 
@@ -61,59 +64,8 @@ namespace KiraDX.Bot.arcaea
             }
 
         }
-        public static void Arc(DisMsg g)
-        {
-            try
-            {
-                string msg = g.msg;
-                if (Users.Info.GetUserConfig(g.fromAccount).ArcID == "-1")
-                {
-                    KiraPlugin.SendMsg("Please bind your arcaea account before check your score", g);
-                    return;
-                }
-
-                //string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");
-                string friendcode = Users.Info.GetUserConfig(g.fromAccount).ArcID;
-                /*if (!File.Exists($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini"))
-                {
-                    KiraPlugin.SendMsg("Please bind your arcaea account before check your score", g);
-                    
-                    return;
-                }
-                string friendcode = File.ReadAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini");*/
-                JObject Info = GetRecent(friendcode);
-
-                if (Info["status"].ToString() != "0")
-                {
-                    KiraPlugin.SendMsg("An unknown error has occurred", g);
-                    return;
-                }
-
-
-                string username = Info["content"]["name"].ToString();
-                string songid = Info["content"]["recent_score"]["song_id"].ToString();
-                string score = Info["content"]["recent_score"]["score"].ToString();
-                string diff = Info["content"]["recent_score"]["difficulty"].ToString();
-                string ptt = Info["content"]["rating"].ToString();
-                string pure = Info["content"]["recent_score"]["perfect_count"].ToString();
-                string Bigpure = Info["content"]["recent_score"]["shiny_perfect_count"].ToString();
-                string far = Info["content"]["recent_score"]["near_count"].ToString();
-                string lost = Info["content"]["recent_score"]["miss_count"].ToString();
-                string sptt = Info["content"]["recent_score"]["rating"].ToString();
-                string cleartype = Info["content"]["recent_score"]["clear_type"].ToString();
-                string playtime = Info["content"]["recent_score"]["time_played"].ToString();
-                ArcPic(g, username, songid, score, diff, friendcode, ptt, pure, Bigpure, far, lost, sptt, playtime, cleartype);
-
-
-
-            }
-            catch (Exception e)
-            {
-                KiraPlugin.SendMsg(e.Message, g);
-                return;
-            }
-
-        }
+       
+        
         public static void Arc(FriendVars g)
         {
             try
@@ -144,18 +96,19 @@ namespace KiraDX.Bot.arcaea
                 }
 
 
+
                 string username = Info["content"]["name"].ToString();
-                string songid = Info["content"]["recent_score"]["song_id"].ToString();
-                string score = Info["content"]["recent_score"]["score"].ToString();
-                string diff = Info["content"]["recent_score"]["difficulty"].ToString();
+                string songid = Info["content"]["recent_score"][0]["song_id"].ToString();
+                string score = Info["content"]["recent_score"][0]["score"].ToString();
+                string diff = Info["content"]["recent_score"][0]["difficulty"].ToString();
                 string ptt = Info["content"]["rating"].ToString();
-                string pure = Info["content"]["recent_score"]["perfect_count"].ToString();
-                string Bigpure = Info["content"]["recent_score"]["shiny_perfect_count"].ToString();
-                string far = Info["content"]["recent_score"]["near_count"].ToString();
-                string lost = Info["content"]["recent_score"]["miss_count"].ToString();
-                string sptt = Info["content"]["recent_score"]["rating"].ToString();
-                string cleartype = Info["content"]["recent_score"]["clear_type"].ToString();
-                string playtime = Info["content"]["recent_score"]["time_played"].ToString();
+                string pure = Info["content"]["recent_score"][0]["perfect_count"].ToString();
+                string Bigpure = Info["content"]["recent_score"][0]["shiny_perfect_count"].ToString();
+                string far = Info["content"]["recent_score"][0]["near_count"].ToString();
+                string lost = Info["content"]["recent_score"][0]["miss_count"].ToString();
+                string sptt = Info["content"]["recent_score"][0]["rating"].ToString();
+                string cleartype = Info["content"]["recent_score"][0]["clear_type"].ToString();
+                string playtime = Info["content"]["recent_score"][0]["time_played"].ToString();
                 ArcPic(g, username, songid, score, diff, friendcode, ptt, pure, Bigpure, far, lost, sptt, playtime, cleartype);
 
 
@@ -163,7 +116,7 @@ namespace KiraDX.Bot.arcaea
             }
             catch (Exception e)
             {
-                KiraPlugin.SendFriendMessage(g.s, g.fromAccount, e.Message);
+                KiraPlugin.SendFriendMessage(g.s, g.fromAccount, e.ToString());
                 return;
             }
 

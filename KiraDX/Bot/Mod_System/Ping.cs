@@ -31,17 +31,17 @@ namespace KiraDX.Bot.Mod_System
                 ext += $"\n群数量:{KiraPlugin.GetGroupListAsync(g.s).Result.Count}";
 
 
-                if (g.s.QQNumber == G.BotList.Miffy)
+                if (g.s.QQNumber == G.BotList.Calista)
                 {
-                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"[KiraDX]MiffyBot在线\n{ext}");
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"[Chocolate]CalistaBot在线\n{ext}");
                 }
-                else if (g.s.QQNumber == G.BotList.Laffy)
+                else if (g.s.QQNumber == G.BotList.Nadia)
                 {
-                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"[KiraDX]LaffyBot在线\n{ext}");
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"[Chocolate]NadiaBot在线\n{ext}");
                 }
-                else if (g.s.QQNumber == G.BotList.Soffy)
+                else if (g.s.QQNumber == G.BotList.Alice)
                 {
-                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"[KiraDX]SoffyBot在线\n{ext}");
+                    KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"[Chocolate]AliceBot在线\n{ext}");
                 }
                 else
                 {

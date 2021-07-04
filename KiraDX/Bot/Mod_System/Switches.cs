@@ -23,9 +23,9 @@ namespace KiraDX.Bot.Mod_System
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"本群模块已被管理团队锁定，无法切换状态");
                     return;
                 }
-                if (e.Sender.Permission==GroupPermission.Administrator|| e.Sender.Permission == GroupPermission.Owner||g.fromAccount==1848200159||g.fromAccount==G.BotList.Laffy || g.fromAccount == G.BotList.Miffy || g.fromAccount == G.BotList.Soffy)
+                if (e.Sender.Permission==GroupPermission.Administrator|| e.Sender.Permission == GroupPermission.Owner||g.fromAccount==1930300830||g.fromAccount==G.BotList.Nadia || g.fromAccount == G.BotList.Calista || g.fromAccount == G.BotList.Alice)
                 {
-                    // /k mod enable cao
+                    // /c mod enable cao
                     string[] cmd = g.msg.Split(' ');
                     string[] FuncList = Users.cfgs.FunctionList.Split(';');
                     
@@ -80,13 +80,13 @@ namespace KiraDX.Bot.Mod_System
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"本群模块已被管理团队锁定，无法切换状态");
                     return;
                 }
-                if (e.Sender.Permission == GroupPermission.Administrator || e.Sender.Permission == GroupPermission.Owner || g.fromAccount == 1848200159 || g.fromAccount == G.BotList.Laffy || g.fromAccount == G.BotList.Miffy || g.fromAccount == G.BotList.Soffy)
+                if (e.Sender.Permission == GroupPermission.Administrator || e.Sender.Permission == GroupPermission.Owner || g.fromAccount == 1930300830 || g.fromAccount == G.BotList.Nadia || g.fromAccount == G.BotList.Calista || g.fromAccount == G.BotList.Alice)
                 {
                     if (!File.Exists($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira"))
                     {
                         File.Create($"{G.path.Apppath}{G.path.SwitchData}{g.fromGroup}.kira").Close();
                     }
-                    // /k mod disable cao
+                    // /c mod disable cao
                     string[] cmd = g.msg.Split(' ');
                     string[] FuncList = File.ReadAllText($"{G.path.Apppath}FunctionList.Kira").Split(';');
                     foreach (var item in FuncList)

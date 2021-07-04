@@ -26,7 +26,7 @@ namespace KiraDX.Bot
                     rt += $"{item} off\n";
                 }
             }
-            rt += "您可以使用/k channel on/off ChannelName来打开或关闭某个频道";
+            rt += "您可以使用/c channel on/off ChannelName来打开或关闭某个频道";
             KiraPlugin.sendMessage(g, rt);
         }
 
@@ -39,7 +39,7 @@ namespace KiraDX.Bot
                     return;
                 }
                 string type = "";
-                // /k channel on xxxx
+                // /c channel on xxxx
                 string[] vs = g.msg.Split(" ", count: 4);
                 if (vs[2]=="on")
                 {
@@ -107,11 +107,11 @@ namespace KiraDX.Bot
         
         }
         public static async void sendAll(GroupMsg g) {
-            if (g.botid==G.BotList.Miffy)
+            if (g.botid==G.BotList.Calista)
             {
                 return;
             }
-            // /k qj c info
+            // /c qj c info
             string[] info = g.msg.Split(" ", count: 4);
             if (info.Length!=4)
             {
@@ -132,7 +132,7 @@ namespace KiraDX.Bot
                 {
                     if (BotFunc.IsMainBot(gm)&&BotFunc.FuncSwith(g,"广播"))
                     {
-                        KiraPlugin.sendMessage(gm, $"[{info[2]}] \n{info[3]}\n提示:你可以通过/k channel off/on {info[2]}来打开或禁用这个频道( {info[2]} 也要带上，这是频道名)\n随机数[{Functions.GetRandomNumber(1,114514)}]", true);
+                        KiraPlugin.sendMessage(gm, $"[{info[2]}] \n{info[3]}\n提示:你可以通过/c channel off/on {info[2]}来打开或禁用这个频道( {info[2]} 也要带上，这是频道名)\n随机数[{Functions.GetRandomNumber(1,114514)}]", true);
                     }
                     
                 }

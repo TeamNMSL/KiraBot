@@ -32,14 +32,14 @@ namespace KiraDX.Bot.Mod_System
         {
             try
             {
-                if (e.Sender.Permission == GroupPermission.Administrator || e.Sender.Permission == GroupPermission.Owner || g.fromAccount == 1848200159 || g.fromAccount == G.BotList.Laffy || g.fromAccount == G.BotList.Miffy || g.fromAccount == G.BotList.Soffy)
+                if (e.Sender.Permission == GroupPermission.Administrator || e.Sender.Permission == GroupPermission.Owner || g.fromAccount == 1930300830 || g.fromAccount == G.BotList.Nadia || g.fromAccount == G.BotList.Calista || g.fromAccount == G.BotList.Alice)
                 {
                     string ctt = File.ReadAllText($"{G.path.Apppath}dismiss.TXT");
                     ctt += $"Group:{g.fromGroup} User:{g.fromAccount} {DateTime.Now.ToString("f")} 已处理\n";
                     File.WriteAllText($"{G.path.Apppath}dismiss.TXT", ctt);
 
                     ctt=File.ReadAllText($"{G.path.Apppath}bangroup.TXT");
-                    ctt += $"{g.fromGroup} 自助退群\n";
+                    ctt += $"\n{g.fromGroup} 自助退群\n";
                     File.WriteAllText($"{G.path.Apppath}bangroup.TXT", ctt);
 
                     KiraPlugin.SendGroupMessage(g.s, g.fromGroup, $"bot将退出当前群聊，操作人：{g.fromAccount},已记录至数据库");

@@ -54,54 +54,7 @@ namespace KiraDX.Bot.arcaea
                 KiraPlugin.SendGroupMessage(g.s, g.fromGroup, e.Message);
             }
         }
-        public static void Bind(DisMsg g)
-        {
-            try
-            {
-                string msg = g.msg;
-                string[] cmd = { "绑定", "/ab", "/a bind", "/arc bind", "/arc绑定" };
-                foreach (var item in cmd)
-                {
-                    if (msg.StartsWith(item))
-                    {
-                        msg = msg.Replace(item, "");
-                        break;
-                    }
-                }
-
-                string fcd = Functions.GetNumberInString(msg).ToString();
-
-
-                while (fcd.Length < 9)
-                {
-                    fcd = "0" + fcd;
-                }
-
-                JObject Info = GetRecent(fcd);
-                if (Info["status"].ToString() != "0")
-                {
-                    KiraPlugin.SendMsg("Wrong friend code", g);
-
-                    return;
-                }
-                else
-                {
-                    File.WriteAllText($"{G.path.Apppath}{G.path.ArcUser}{g.fromAccount}.ini", fcd);
-                    Users.Info.GetUserConfig(g.fromAccount);
-                    if (Users.Info.UserInfo.ContainsKey(g.fromAccount))
-                    {
-                        Users.Info.UserInfo[g.fromAccount].ArcID = fcd;
-                    }
-                    KiraPlugin.SendMsg("Bind successfully", g);
-                    return;
-                }
-            }
-            catch (Exception e)
-            {
-
-                KiraPlugin.SendMsg(e.Message, g);
-            }
-        }
+       
         public static void Bind(FriendVars g)
         {
             try

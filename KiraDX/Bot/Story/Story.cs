@@ -9,9 +9,9 @@ namespace KiraDX.Bot.Story
         static public void StoryGet(GroupMsg g) {
             try
             {
-                if (EventValue.IsLock(g.fromAccount, g.msg.format().Replace("/k story ", "")))
+                if (EventValue.IsLock(g.fromAccount, g.msg.format().Replace("/c story ", "")))
                 {
-                    KiraPlugin.sendMessage(g, $"[mirai:image:File:{G.path.Stories}{g.msg.format().Replace("/k story ", "")}.png]",true);
+                    KiraPlugin.sendMessage(g, $"[mirai:image:File:{G.path.Stories}{g.msg.format().Replace("/c story ", "")}.png]",true);
                 }
                 else
                 {

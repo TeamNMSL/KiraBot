@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using System.Threading;
-using DSharpPlus;
 using Team123it.QBC.Client;
 
 namespace Mirai_CSharp.Example
@@ -17,50 +16,26 @@ namespace Mirai_CSharp.Example
 
 
 
-                MiraiHttpSessionOptions Miffy_options = new MiraiHttpSessionOptions("192.168.0.171", 39253, "MizunaNakooo");
-                await using MiraiHttpSession Miffy = new MiraiHttpSession();
-                Miffy.AddPlugin(plugin);
+                MiraiHttpSessionOptions Calista_options = new MiraiHttpSessionOptions("192.168.0.171", 39253, "MizunaNakooo");
+                await using MiraiHttpSession Calista = new MiraiHttpSession();
+                Calista.AddPlugin(plugin);
             
-                Miffy.ConnectAsync(Miffy_options, KiraDX.G.BotList.Miffy);
+                Calista.ConnectAsync(Calista_options, KiraDX.G.BotList.Calista);
 
-            MiraiHttpSessionOptions Laffy_options = new MiraiHttpSessionOptions("192.168.0.171", 39252, "MizunaNakooo");
-                await using MiraiHttpSession Laffy = new MiraiHttpSession();
-                Laffy.AddPlugin(plugin);
-                Laffy.ConnectAsync(Laffy_options, KiraDX.G.BotList.Laffy);
-
-
-                MiraiHttpSessionOptions Soffy_options = new MiraiHttpSessionOptions("192.168.0.171", 39251, "MizunaNakooo");
-                await using MiraiHttpSession Soffy = new MiraiHttpSession();
-                Soffy.AddPlugin(plugin);
-                Soffy.ConnectAsync(Soffy_options, KiraDX.G.BotList.Soffy);
+            MiraiHttpSessionOptions Nadia_options = new MiraiHttpSessionOptions("192.168.0.171", 39252, "MizunaNakooo");
+                await using MiraiHttpSession Nadia = new MiraiHttpSession();
+                Nadia.AddPlugin(plugin);
+                Nadia.ConnectAsync(Nadia_options, KiraDX.G.BotList.Nadia);
 
 
-            Task.Run(async () =>
-            {
-                var discord = new DiscordClient(new DiscordConfiguration()
-                {
-                    Token = KiraDX.G.DiscordBotToken,
-                    TokenType = TokenType.Bot
-                });
-
-                discord.MessageCreated += async (s, e) =>
-                {
-
-                    Console.WriteLine("[Discord]收到服務器" + e.Channel.Id.ToString() + "用戶:" + ((long)(e.Message.Author.Id)).ToString() + "的消息:" + e.Message.Content);
-                    ThreadPool.QueueUserWorkItem(new WaitCallback(KiraDX.Bot.Discord.DiscordMsg), new KiraDX.Bot.DisMsg(s, e, e.Message.Content, (long)e.Message.Author.Id, (long)e.Channel.Id));
-
-                    if (e.Message.Content.ToLower().StartsWith("ping"))
-                        await e.Message.RespondAsync("pong!");
-                };
+                MiraiHttpSessionOptions Alice_options = new MiraiHttpSessionOptions("192.168.0.171", 39251, "MizunaNakooo");
+                await using MiraiHttpSession Alice = new MiraiHttpSession();
+                Alice.AddPlugin(plugin);
+                Alice.ConnectAsync(Alice_options, KiraDX.G.BotList.Alice);
 
 
-                 discord.ConnectAsync();
-                await discord.UpdateStatusAsync(new DSharpPlus.Entities.DiscordActivity("Pornhub"/*DSharpPlus.Entities.ActivityType.Watching*/));
-                await Task.Delay(-1);
-                
-                
-            });
-
+          
+        
             
             Task.Run(async () => {
                 Bot QBCBot = new Bot(new BotInfo() //初始化Bot实例
@@ -104,6 +79,14 @@ namespace Mirai_CSharp.Example
                 }
 
 
+            });
+            Task.Run(async() => {
+                string[] a = { "" };
+                KiraWeb.Program.Main(a);
+            });
+            Task.Run(async () => {
+                string[] a = { "" };
+                KiraWebPage.Program.Main(a);
             });
 
             while (true)
