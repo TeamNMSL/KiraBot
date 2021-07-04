@@ -17,9 +17,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\KiraWeb\KiraWeb\KiraWeb.csproj" />
     <ProjectReference Include="..\KiraDX\KiraDX.csproj" />
-    <ProjectReference Include="..\KiraWebPage\KiraWebPage.csproj" />
+    <ProjectReference Include="..\KiraWeb\KiraWeb\KiraWeb.csproj" />
   </ItemGroup>
   
   <ItemGroup>

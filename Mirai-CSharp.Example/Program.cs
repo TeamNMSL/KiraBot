@@ -84,10 +84,7 @@ namespace Mirai_CSharp.Example
                 string[] a = { "" };
                 KiraWeb.Program.Main(a);
             });
-            Task.Run(async () => {
-                string[] a = { "" };
-                KiraWebPage.Program.Main(a);
-            });
+            
 
             while (true)
             {
