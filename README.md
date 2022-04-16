@@ -5,7 +5,7 @@
 ## SDK是[Mirai-Csharp][2]
 
 ## 开发状况
-随缘
+中止
 
   [1]: https://github.com/mamoe/mirai
   [2]: https://github.com/Executor-Cheng/Mirai-CSharp
